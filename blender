@@ -1,0 +1,6 @@
+open console
+bpy.app.debug = True
+
+N panel-> mesh display-> indice
+
+

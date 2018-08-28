@@ -1,0 +1,19 @@
+Ctrl + Alt + L          quick format
+ctrl + Q                quick document
+ctrl + P                show parameter hint
+ctrl + Alt + <-         goto last edit position
+ctrl + F4( alt + <)     close tab
+ctrl + F12              search symbol in current file
+ctrl + w                select word with scope (quotation marks)
+alt  + J                select occurences
+Ctrl + F11              toggle bookMark
+ctrl + F8               toggle breakpoint
+ctrl + shift + F8       breakpoint editor
+shift + alt + insert    toggle between line and column selection mode
+ctrl + shift + v        choose recent clipboard content to paste
+ctrl + h                display hierarchy tree
+ctrl + F12              show structure popup
+ctrl + shift + I        show quick definition
+ctrl+ shift + enter     jump outside closing bracket
+
+

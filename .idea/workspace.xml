@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2fd4d840-be5a-4837-b9a8-2ebd84473736" name="Default" comment="finish basic model import" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/game$Example4SimpleGameloop.ic" NAME="Example4SimpleGameloop Coverage Results" MODIFIED="1530810896227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/game_Collision$MyGravity.ic" NAME="MyGravity Coverage Results" MODIFIED="1533918899259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/game$myGame.ic" NAME="myGame Coverage Results" MODIFIED="1532138137951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/game$Test.ic" NAME="Test Coverage Results" MODIFIED="1531971986072" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="autoscrollToSource" value="true" />
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="D:\java\project\test" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="922164583">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="18" />
+          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.6" value="10" />
+          <entry key="project.open.time.7" value="2" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="19" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="blender" value="1" />
+          <entry key="frag" value="7" />
+          <entry key="fs" value="1" />
+          <entry key="java" value="1319" />
+          <entry key="obj" value="12" />
+          <entry key="scene" value="2" />
+          <entry key="vert" value="14" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Android RenderScript" value="1" />
+          <entry key="GLSL shader file" value="21" />
+          <entry key="JAVA" value="1319" />
+          <entry key="PLAIN_TEXT" value="15" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="blender" value="3" />
+          <entry key="java" value="11720" />
+          <entry key="scene" value="36" />
+          <entry key="txt" value="14" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="11720" />
+          <entry key="PLAIN_TEXT" value="53" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="1877560873">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="26" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.5" value="8" />
+          <entry key="project.open.time.6" value="10" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="26" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="Notebook" value="2" />
+          <entry key="blender" value="2" />
+          <entry key="class" value="1" />
+          <entry key="debug" value="2" />
+          <entry key="frag" value="6" />
+          <entry key="java" value="2793" />
+          <entry key="obj" value="14" />
+          <entry key="todo" value="1" />
+          <entry key="vert" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="1" />
+          <entry key="GLSL shader file" value="14" />
+          <entry key="JAVA" value="2793" />
+          <entry key="PLAIN_TEXT" value="21" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Notebook" value="55" />
+          <entry key="blender" value="1" />
+          <entry key="debug" value="49" />
+          <entry key="dummy" value="12" />
+          <entry key="java" value="41631" />
+          <entry key="obj" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="41631" />
+          <entry key="PLAIN_TEXT" value="118" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="-1384256341">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="20" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.6" value="8" />
+          <entry key="project.open.time.7" value="3" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="22" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="Notebook" value="1" />
+          <entry key="blender" value="1" />
+          <entry key="gitignore" value="1" />
+          <entry key="java" value="631" />
+          <entry key="obj" value="3" />
+          <entry key="todo" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="631" />
+          <entry key="PLAIN_TEXT" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="blender" value="1" />
+          <entry key="java" value="14627" />
+          <entry key="todo" value="115" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="14627" />
+          <entry key="PLAIN_TEXT" value="116" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="game" />
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="horizontal" split-proportion="0.4896166">
+      <split-first>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="440">
+                  <caret line="242" column="42" selection-start-line="242" selection-start-column="42" selection-end-line="242" selection-end-column="42" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/engine/Physics/BoundingBox.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="290">
+                  <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="GLSL Shader" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>inputfr</find>
+      <find>getName</find>
+      <find>render</find>
+      <find>getbound</find>
+      <find>model</find>
+      <find>childs</find>
+      <find>getChilds</find>
+      <find>calcu</find>
+      <find>updatea</find>
+      <find>getrela</find>
+      <find>get</find>
+      <find>createObj</find>
+      <find>calculateMa</find>
+      <find>UIChild</find>
+      <find>collideall</find>
+      <find>relateAc</find>
+      <find>relateVel</find>
+      <find>play</find>
+      <find>dot</find>
+      <find>jump</find>
+      <find>jum</find>
+      <find>player</find>
+      <find>bound</find>
+      <find>groundBoundingbox</find>
+      <find>stoneBoundingBox</find>
+      <find>stone</find>
+      <find>track</find>
+      <find>rotateZ(Constant.DEGREE180</find>
+      <find>STO</find>
+      <find>root</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>lib</replace>
+      <replace>chapter05.c05p1.src.main.java.org.lwjglb</replace>
+      <replace>0.8</replace>
+      <replace>0.3</replace>
+      <replace>in</replace>
+      <replace>input</replace>
+      <replace>raw</replace>
+      <replace>projectMatrixFun</replace>
+      <replace>/</replace>
+      <replace>obj</replace>
+      <replace>data</replace>
+      <replace>getX</replace>
+      <replace>Data</replace>
+      <replace>step</replace>
+      <replace>0.0f</replace>
+      <replace>0.2f</replace>
+      <replace>0.5f</replace>
+      <replace>f,</replace>
+      <replace>InGameText</replace>
+      <replace>DebugTextFontTexture</replace>
+      <replace>InGameTextFontTexture</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>D:\java\project\book\chapter14\</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="relaxslow &lt;relaxslowus@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/engine/Interface/INeedData.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/IForceTerminated.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceTimer.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_Jump.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_Gravity.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/ICanUpdate.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/ICanInput.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/Obj.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/INeedGoalTest.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/SceneObject.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/IGoalTest.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/LineSegment3D.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/EndPoint.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/TrackLine.java" />
+        <option value="$PROJECT_DIR$/src/engine/Util/Pool.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/CharObj.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/GroundInfo.java" />
+        <option value="$PROJECT_DIR$/src/project/Collidision.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/Scene.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Direct.java" />
+        <option value="$PROJECT_DIR$/src/engine/Util/Tools.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/CollideFace.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Direction.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/Path.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/IPhysics.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Root.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/CollideVertex.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/INeedUpdate.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/IUpdateVec3f.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BVec3f.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BNormal.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BDirect.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/Goal.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BFace.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/Face.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/Vertex.java" />
+        <option value="$PROJECT_DIR$/src/engine/Util/Constant.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/CollideInfo.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/ICollidable.java" />
+        <option value="$PROJECT_DIR$/src/project/Game.java" />
+        <option value="$PROJECT_DIR$/todo" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BVertex.java" />
+        <option value="$PROJECT_DIR$/blender" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/PhysicObj.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/ICharactor.java" />
+        <option value="$PROJECT_DIR$/src/engine/Interface/IForceFunction.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/Canvas.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/ForceFunction.java" />
+        <option value="$PROJECT_DIR$/src/engine/Objs/Player.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/BoundingBox.java" />
+        <option value="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1100" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+              <item name="Physics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="game_Pathtest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game_Pathtest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+              <item name="Physics" type="462c0819:PsiDirectoryNode" />
+              <item name="ForceFunctions" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="loop&#9;PSI&#9;JAVA://engine.Objs.Canvas#loop&#10;collideall&#9;PSI&#9;JAVA://engine.Objs.Canvas#collideAll&#10;setcolli&#9;PSI&#9;JAVA://project.Game#setCollide&#10;calculateMatri&#9;PSI&#9;JAVA://engine.Interface.IChild#calculateMatrix&#10;displayt&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;setCollide&#9;PSI&#9;JAVA://project.Game#setCollide&#10;addobj&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;setcoll&#9;PSI&#9;JAVA://project.Game#setCollide&#10;collideAll&#9;PSI&#9;JAVA://engine.Objs.Canvas#collideAll&#10;setColl&#9;PSI&#9;JAVA://project.Game#setCollide&#10;addforce&#9;PSI&#9;JAVA://engine.Interface.IPhysics#addForce&#10;ADDOBJ&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;displaytra&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;calculateM&#9;PSI&#9;JAVA://engine.Interface.IChild#calculateMatrix&#10;addObj&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;addmesh&#9;PSI&#9;JAVA://project.Game#addMesh&#10;test&#9;PSI&#9;JAVA://project.Collidision#test&#10;addtra&#9;PSI&#9;JAVA://project.Collidision#addTrackLines&#10;addtran&#9;PSI&#9;JAVA://sun.util.calendar.ZoneInfoFile#addTrans&#10;testGoa&#9;PSI&#9;JAVA://engine.Interface.IGoalTest#testGoal&#10;addTra&#9;PSI&#9;JAVA://project.Collidision#addTrackLines&#10;renderNo&#9;PSI&#9;JAVA://engine.Objs.Canvas#renderNormal&#10;render&#9;PSI&#9;JAVA://engine.Objs.Canvas#render&#10;bound&#9;PSI&#9;JAVA://engine.Interface.ICollidable#getBoundingBox&#10;set&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;markdelete&#9;null&#9;null&#10;removefor&#9;PSI&#9;JAVA://engine.Interface.IPhysics#removeForce&#10;add&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;setcollide&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;setcollid&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;gether&#9;PSI&#9;JAVA://engine.Physics.CollideVertex#getherInfo&#10;addui&#9;PSI&#9;JAVA://project.Collidision#addUIObj&#10;force&#9;FILE&#9;file://D:/java/project/game_Collision/src/engine/Physics/ForceFunctions/Force_Input.java&#10;addcollide&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addMesh&#9;PSI&#9;JAVA://project.Collidision#addMesh&#10;addcamera&#9;PSI&#9;JAVA://project.Collidision#addCameras&#10;addcollid&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addco&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;getherin&#9;PSI&#9;JAVA://engine.Objs.CollideVertex#getherInfo&#10;getherinfo&#9;PSI&#9;JAVA://engine.Objs.CollideFace#getherInfo&#10;canvas&#9;FILE&#9;file://D:/java/project/game_Collision/src/engine/Objs/Canvas.java&#10;displaytr&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;addForce&#9;PSI&#9;JAVA://engine.Interface.IAffectByForce#addForce&#10;addCollideg&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addcolli&#9;PSI&#9;JAVA://engine.Objs.Canvas#addCollideGroup&#10;addforc&#9;PSI&#9;JAVA://engine.Objs.Obj#addForce&#10;addfor&#9;PSI&#9;JAVA://engine.Objs.Obj#addForce&#10;addbound&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;addbou&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;addUI&#9;PSI&#9;JAVA://project.Collidision#addUIObj" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535427321885" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/engine/Objs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../game_RobotArm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="engine.Interface" />
+      <recent name="engine.Physics.ForceFunctions" />
+      <recent name="engine.Physics" />
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\java\project\game\resources\textures" />
+      <recent name="D:\java\project\game" />
+      <recent name="D:\java\project\game\resources" />
+      <recent name="D:\java\project\game\res\shader" />
+      <recent name="D:\java\project\game\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\java\project\game\waste" />
+      <recent name="D:\java\project\book\chapter09" />
+      <recent name="D:\java\project\book\chapter09\src" />
+      <recent name="D:\java\project\book\chapter14" />
+      <recent name="D:\java\project\book\chapter14\src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="project.Game" />
+      <module name="game" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="game" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="project.Game" />
+      <module name="game" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="JASONSimple" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_INHERITED,SHOW_PROPERTIES,ALPHA_COMPARATOR,SHOW_NON_PUBLIC,VISIBILITY_SORTER" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2fd4d840-be5a-4837-b9a8-2ebd84473736" name="Default" comment="" />
+      <created>1529890984898</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1529890984898</updated>
+    </task>
+    <task id="LOCAL-00001" summary="add texture function">
+      <created>1530927534689</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1530927534689</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add texture function">
+      <created>1530927726219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1530927726219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="finish basic model import">
+      <created>1531972977300</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1531972977300</updated>
+    </task>
+    <task id="LOCAL-00004" summary="finish basic model import">
+      <created>1531973304167</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1531973304167</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="1">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1552" height="880" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5409182" visible="true" weight="0.1859558" />
+      <window_info id="Structure" order="1" sideWeight="0.25974026" side_tool="true" weight="0.2360208" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" sideWeight="0.45908183" side_tool="true" weight="0.1462939" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="bottom" id="Problems" order="0" sideWeight="0.49414062" weight="0.3111979" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.37532467" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.490604" weight="0.34935066" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7718121" weight="0.42207792" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49328858" weight="0.2956853" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4986577" weight="0.3267974" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5058594" side_tool="true" weight="0.3125" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32857144" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49932885" weight="0.31558442" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.3294271" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.1796875" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.24630873" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.32834852" />
+      <window_info anchor="right" x="0" y="0" width="337" height="678" id="Documentation" order="9" side_tool="true" weight="0.3294271" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.14609054" visible="true" weight="0.1689008" />
+      <window_info id="Structure" order="1" sideWeight="0.8539095" side_tool="true" weight="0.19140625" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" weight="0.32877603" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="bottom" id="Problems" order="0" sideWeight="0.49414062" weight="0.3111979" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3763021" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.490604" weight="0.35324675" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7718121" weight="0.3" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49328858" weight="0.2956853" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4986577" weight="0.3267974" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5058594" side_tool="true" weight="0.3125" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32909784" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49932885" weight="0.31688312" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.3294271" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.1796875" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.24630873" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.3294271" />
+      <window_info anchor="right" x="0" y="0" width="337" height="678" id="Documentation" order="9" side_tool="true" weight="0.3294271" />
+    </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add texture function" />
+    <MESSAGE value="finish basic model import" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish basic model import" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/engine/Objs/Player.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="286" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/engine/Physics/BoundingBox.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="287" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint type="java-exception">
+          <condition expression="color==null" language="JAVA" />
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="vertex.indice" language="JAVA" />
+        <watch expression="face.index" language="JAVA" />
+        <watch expression="player.getBoundingBox().rootPoint.indice" language="JAVA" />
+        <watch expression="info.vertex.indice" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>color==null</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>collideInfo.type==CollideInfo.GOAL</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>collideinfo.type==CollideInfo.GOAL</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>this.name.equals(&quot;testPlatform1&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>this.name.equals(&quot;testPlatform&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>((Block) face.belongTo).name.equals(&quot;testPlatform2&quot;)&amp;&amp;face.index==0;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>((Block) face.belongTo).name.equals(&quot;testPlatform2&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>vertex.indice==4</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>hostObj.getForce(Force_Gravity.class)!=null</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>angle&lt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="watch">
+      <expression>
+        <expression-string>info.vertex.indice</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>player.getBoundingBox().rootPoint.indice</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>player.getBoundingBox().rootPoint</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>face.index</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>vertex.indice</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>hostObj</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>Goal.pool</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>scene.getSpeed()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>player</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>d</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceTimer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Direction.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/ICanUpdate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/IUpdateVec3f.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Util/Raw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/LineSegment3D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="32" column="8" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/model/testPlatform2.obj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Util/Pool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/java-1.8.0-openjdk-1.8.0.171-1.b10.redhat.windows.x86_64/src.zip!/java/util/regex/Pattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="4781" column="11" lean-forward="true" selection-start-line="4781" selection-start-column="11" selection-end-line="4781" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BDirect.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BNormal.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/CollideFace.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/CollideVertex.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/Goal.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BVec3f.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BFace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Root.java" />
+    <entry file="jar://C:/Program Files/Java/java-1.8.0-openjdk-1.8.0.171-1.b10.redhat.windows.x86_64/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="460" column="19" selection-start-line="460" selection-start-column="19" selection-end-line="460" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BoundingMesh.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="80" column="31" lean-forward="true" selection-start-line="80" selection-start-column="31" selection-end-line="80" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/Face.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/Vertex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="28" column="1" lean-forward="true" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/IPhysics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Util/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/CollideInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/IChild.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../lib/JOML/joml-1.9.9-sources.jar!/org/joml/Vector3f.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="1104" column="23" selection-start-line="1104" selection-start-column="23" selection-end-line="1104" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Notebook">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="12" lean-forward="true" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/Obj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="61" column="9" lean-forward="true" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blender">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/IInput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/SceneObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/ICollidable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/ICharactor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/IForceFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/project/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="189" lean-forward="true" selection-start-line="189" selection-end-line="189" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_Jump.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/Canvas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="208" selection-start-line="208" selection-end-line="208" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_GravityLiner.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_AdjustPosture.java" />
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_Input.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_Gravity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/ForceFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/model/jumpbox_Bounding.obj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Interface/ICollideOccur.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="38" column="26" lean-forward="true" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Objs/PhysicObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="655">
+          <caret line="205" column="28" lean-forward="true" selection-start-line="205" selection-start-column="28" selection-end-line="205" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BVertex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/BoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="242" column="42" selection-start-line="242" selection-start-column="42" selection-end-line="242" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>game</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>lwjgl-3.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

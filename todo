@@ -1,0 +1,4 @@
+
+
+ignore certain point collision detection ,let only the root collide the ground 
+detect edge 

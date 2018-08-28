@@ -1,0 +1,26 @@
+obj fall outside the nearZ/farZ
+size too small
+
+pass uniform value before useprogram
+
+draw wireframe use  glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                              
+
+
+
+
+disable parameter hints
+** editor-general-apprearance
+https://stackoverflow.com/questions/40866202/intellij-shows-method-parameter-hints-on-usage-how-to-disable-it
+
+
+
+multiple engine.VBO in one VAO or One engine.VBO in one VAO
+**one VAO for one engine.ElementMesh
+https://www.opengl.org/discussion_boards/showthread.php/198428-Multiple-VBOs-in-one-VAO
+
+https://stackoverflow.com/questions/8923174/opengl-vao-best-practices
+
+can one engine.VBO in multiple VAO?
+**Yes
+https://stackoverflow.com/questions/15438605/can-a-vbo-be-bound-to-multiple-vaos
