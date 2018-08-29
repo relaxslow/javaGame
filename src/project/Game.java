@@ -113,55 +113,29 @@ public class Game {
     }
 
     private static void test() {
-        Vector3f aaa = new Vector3f(1, 0, 0);
-        Vector3f bbb = new Vector3f();
-        aaa.mul(-1, bbb);
-        bbb.x = 1;
-        boolean xxx = (aaa.equals(bbb));
-        Matrix4f m = new Matrix4f();
-        m.translate(-10, 0, 0);
-
-//        LinkedList<Integer> testarray = new LinkedList<>();
-//        testarray.add(1);
-//        testarray.add(2);
-//        int i=0;
-//        while(i<testarray.size())
-//        {
-//            int ss=testarray.get(i);
-//            if(ss==1){
-//                testarray.remove(i);
-//                i--;
-//            }
-//            if(ss==2)
-//                testarray.add(3);
-//            i++;
-//        }
-//        LinkedHashMap<String, Integer> testHashMap = new LinkedHashMap<>();
-//        testHashMap.put("a",1);
-//        testHashMap.put("b",2);
-//        Collection <Integer> values=testHashMap.values();
-//        
-//        
-//        Iterator it= testHashMap.entrySet().iterator();
-//        while(it.hasNext()){
-//            Map.Entry pair = (Map.Entry)it.next();
-//            if((int)pair.getValue()==2)
-//            testHashMap.put("c",3);
-//            if((int)pair.getValue()==1)
-//                testHashMap.remove(pair.getKey());
-//        }
-        float value = 1230.000000000000001f;
-        float scale = (float) Math.pow(10, 7);
-        float result = Math.round(value * scale) / scale;
-
-        float DEGREE_90 = (float) Math.toRadians(90);
-        Vector3f v1 = new Vector3f(-0.7f, -0.7f, 0f);
+        
+        
+//        Vector3f aaa = new Vector3f(1, 0, 0);
+//        Vector3f bbb = new Vector3f();
+//        aaa.mul(-1, bbb);
+//        bbb.x = 1;
+//        boolean xxx = (aaa.equals(bbb));
+//        Matrix4f m = new Matrix4f();
+//        m.translate(-10, 0, 0);
+//
+//
+//        float value = 1230.000000000000001f;
+//        float scale = (float) Math.pow(10, 7);
+//        float result = Math.round(value * scale) / scale;
+//
+        float radians = (float) Math.toRadians(90);
+        Vector3f v1 = new Vector3f(0f, 1f, 0f);
         Vector3f v2 = new Vector3f(0.7f, -0.7f, 0f);
-        Vector3f add = v1.add(v2);
-        float dist = v1.dot(v2);
-        float angle = v2.angle(v1);
+//        Vector3f add = v1.add(v2);
+//        float dist = v1.dot(v2);
+        float angle = v1.angle(v2);
         float angle2 = v1.angleCos(v2);
-        Debug.log("dot:" + dist);
+//        Debug.log("dot:" + dist);
         Debug.log("angle:" + angle2);
     }
 

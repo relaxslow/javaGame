@@ -71,9 +71,9 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
     public void apply(IPhysics obj, float interval) {
 
         input_direct.mul(speed, inputSpeed);
-        Vector3f speed = obj.getSpeed();
+        Vector3f speedVec = obj.getSpeed();
 
-        speed.add(inputSpeed);
+        speedVec.add(inputSpeed);
 
     }
 
@@ -97,35 +97,62 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
         } else {
             if (key.isPressed(rightKey)) {
                 goal = right;
-                if (at != null) {
-                    left = at;
-                    at = null;
-                }
                 right.update();
                 right.sub(root, right_direct);
                 right_direct.normalize();
+
+
+                if (at != null) {//at goal
+                    float angle = Constant.UP3f.angle(right_direct);
+                    if (angle > Constant.Cliff) {
+                        Debug.log("collide cliff");
+                        left_direct.mul(-1,jump_direct);
+                        jumpFromGround((IPhysics) obj);
+                        return;
+                    } else if (angle < Constant.Wall) {
+                        Debug.log("collide wall");
+                        speed = 0;
+                        return;
+                    } else {
+                        left = at;
+                        at = null;
+                        //change posture
+                        right_direct.rotateZ(Constant.Radian_90, tempUpVec);
+                        adjustPosture(tempUpVec);
+                    }
+
+                }
+
                 input_direct.add(right_direct);
-
-
-                //change posture
-                right_direct.rotateZ(Constant.Radian_90, tempUpVec);
-                adjustPosture(tempUpVec);
 
 
             } else if (key.isPressed(GLFW_KEY_A)) {
                 goal = left;
-                if (at != null) {
-                    right = at;
-                    at = null;
-                }
                 left.update();
                 left.sub(root, left_direct);
                 left_direct.normalize();
-                input_direct.add(left_direct);
+                if (at != null) {
+                    float angle = Constant.UP3f.angle(left_direct);
+                    if (angle > Constant.Cliff) {
+                        Debug.log("collide cliff");
+                        right_direct.mul(-1,jump_direct);
+                        jumpFromGround((IPhysics) obj);
+                        return;
+                    } else if (angle < Constant.Wall) {
+                        Debug.log("collide wall");
+                        speed = 0;
+                        return;
+                    } else {
+                        right = at;
+                        at = null;
+                        //change posture
+                        left_direct.rotateZ(Constant.Radian_Negetive_90, tempUpVec);
+                        adjustPosture(tempUpVec);
+                    }
 
-                //change posture
-                left_direct.rotateZ(Constant.Radian_Negetive_90, tempUpVec);
-                adjustPosture(tempUpVec);
+                }
+
+                input_direct.add(left_direct);
 
             }
         }
@@ -140,21 +167,28 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
             jump_direct.normalize();
 
 
-            input_direct.add(jump_direct);
-            input_direct.normalize();
-
-
-            ((IPhysics) obj).removeForce(Force_MoveOnGround.class);
-            input_direct.mul(jumpspeed, jumpSpeedVec);
-            ((IPhysics) obj).addForce(Force_Gravity.class, jumpSpeedVec);
-            removeAllGround();
-
-            adjustPosture(Constant.UP3f);
-
+            jumpFromGround((IPhysics) obj);
 
         }
 
 
+    }
+
+    //calculate jump_directFirst
+    void jumpFromGround(IPhysics obj) {
+        input_direct.add(jump_direct);
+        input_direct.normalize();
+
+        obj.removeForce(Force_MoveOnGround.class);
+        input_direct.mul(jumpspeed, jumpSpeedVec);
+        obj.addForce(Force_Gravity.class, jumpSpeedVec);
+        removeAllGround();
+
+        adjustPosture(Constant.UP3f);
+    }
+
+    private boolean FaceAheadIsACliff() {
+        return false;
     }
 
     void adjustPosture(Vector3f dest) {
@@ -201,6 +235,10 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
 
     }
 
+    //    Vector3f leftDirect=new Vector3f();
+//    Vector3f rightDirect = new Vector3f();
+    boolean isLeftCliff = false;
+    boolean isRightCliff = false;
 
     class ReachGoalFun implements ICollideOccur {
 
@@ -215,6 +253,7 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
             at = goal;
             goal = null;
 
+
             //change posture at goal point
 //            Vector3f n1 = info.vertex.leftFace.normal;
 //            Vector3f n2 = info.vertex.rightFace.normal;
@@ -228,20 +267,35 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
 
 
         }
+
+        Vector3f leftDirect = new Vector3f();
+
+        private boolean testCliff() {
+
+            left.sub(goal, leftDirect);
+//            leftDirect.angle()
+            return false;
+        }
     }
 
     class ReachGoalFun_jumpCliff implements ICollideOccur {
 
         @Override
         public void run(CollideInfo info) {
-            BFace face = null;
+            BFace faceAhead = null;
+            BFace faceCur = null;
             if (goal == left) {
-                face = info.vertex.leftFace;
+                faceAhead = info.vertex.leftFace;
+                faceCur = info.vertex.rightFace;
             } else if (goal == right) {
-                face = info.vertex.rightFace;
+                faceAhead = info.vertex.rightFace;
+                faceCur = info.vertex.leftFace;
             }
-            Vector3f normal = face.normal;
-            
+            faceAhead.update();
+            faceCur.update();
+            float angle = faceAhead.normal.angleCos(faceCur.normal);
+
+
         }
     }
 
