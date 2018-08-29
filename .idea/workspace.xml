@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fd4d840-be5a-4837-b9a8-2ebd84473736" name="Default" comment="finish basic model import">
-      <change afterPath="$PROJECT_DIR$/src/test/properWayToDeleteWhenIterate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/Util/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/Util/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/project/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/project/Game.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -167,12 +163,13 @@
           <entry key="blender" value="1" />
           <entry key="java" value="15662" />
           <entry key="todo" value="115" />
+          <entry key="txt" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="15662" />
-          <entry key="PLAIN_TEXT" value="116" />
+          <entry key="PLAIN_TEXT" value="125" />
         </counts>
       </usages-collector>
     </session>
@@ -200,8 +197,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/engine/Util/Constant.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="10" column="61" lean-forward="true" selection-start-line="10" selection-start-column="61" selection-end-line="10" selection-end-column="61" />
+                <state relative-caret-position="255">
+                  <caret line="17" column="64" lean-forward="true" selection-start-line="17" selection-start-column="64" selection-end-line="17" selection-end-column="64" />
                 </state>
               </provider>
             </entry>
@@ -283,6 +280,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="relaxslow" />
         <option value="relaxslow &lt;relaxslowus@gmail.com&gt;" />
       </list>
     </option>
@@ -427,7 +425,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="addobj&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;test&#9;PSI&#9;JAVA://project.Game#test&#10;loop&#9;PSI&#9;JAVA://engine.Objs.Canvas#loop&#10;collideall&#9;PSI&#9;JAVA://engine.Objs.Canvas#collideAll&#10;setcolli&#9;PSI&#9;JAVA://project.Game#setCollide&#10;calculateMatri&#9;PSI&#9;JAVA://engine.Interface.IChild#calculateMatrix&#10;displayt&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;setCollide&#9;PSI&#9;JAVA://project.Game#setCollide&#10;setcoll&#9;PSI&#9;JAVA://project.Game#setCollide&#10;collideAll&#9;PSI&#9;JAVA://engine.Objs.Canvas#collideAll&#10;setColl&#9;PSI&#9;JAVA://project.Game#setCollide&#10;addforce&#9;PSI&#9;JAVA://engine.Interface.IPhysics#addForce&#10;ADDOBJ&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;displaytra&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;calculateM&#9;PSI&#9;JAVA://engine.Interface.IChild#calculateMatrix&#10;addObj&#9;PSI&#9;JAVA://project.Game#addSceneObj&#10;addmesh&#9;PSI&#9;JAVA://project.Game#addMesh&#10;addtra&#9;PSI&#9;JAVA://project.Collidision#addTrackLines&#10;addtran&#9;PSI&#9;JAVA://sun.util.calendar.ZoneInfoFile#addTrans&#10;testGoa&#9;PSI&#9;JAVA://engine.Interface.IGoalTest#testGoal&#10;addTra&#9;PSI&#9;JAVA://project.Collidision#addTrackLines&#10;renderNo&#9;PSI&#9;JAVA://engine.Objs.Canvas#renderNormal&#10;render&#9;PSI&#9;JAVA://engine.Objs.Canvas#render&#10;bound&#9;PSI&#9;JAVA://engine.Interface.ICollidable#getBoundingBox&#10;set&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;markdelete&#9;null&#9;null&#10;removefor&#9;PSI&#9;JAVA://engine.Interface.IPhysics#removeForce&#10;add&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;setcollide&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;setcollid&#9;PSI&#9;JAVA://project.Collidision#setCollide&#10;gether&#9;PSI&#9;JAVA://engine.Physics.CollideVertex#getherInfo&#10;addui&#9;PSI&#9;JAVA://project.Collidision#addUIObj&#10;force&#9;FILE&#9;file://D:/java/project/game_Collision/src/engine/Physics/ForceFunctions/Force_Input.java&#10;addcollide&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addMesh&#9;PSI&#9;JAVA://project.Collidision#addMesh&#10;addcamera&#9;PSI&#9;JAVA://project.Collidision#addCameras&#10;addcollid&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addco&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;getherin&#9;PSI&#9;JAVA://engine.Objs.CollideVertex#getherInfo&#10;getherinfo&#9;PSI&#9;JAVA://engine.Objs.CollideFace#getherInfo&#10;canvas&#9;FILE&#9;file://D:/java/project/game_Collision/src/engine/Objs/Canvas.java&#10;displaytr&#9;PSI&#9;JAVA://engine.Objs.Canvas#displayTrackLines&#10;addForce&#9;PSI&#9;JAVA://engine.Interface.IAffectByForce#addForce&#10;addCollideg&#9;PSI&#9;JAVA://project.Collidision#addCollideGroups&#10;addcolli&#9;PSI&#9;JAVA://engine.Objs.Canvas#addCollideGroup&#10;addforc&#9;PSI&#9;JAVA://engine.Objs.Obj#addForce&#10;addfor&#9;PSI&#9;JAVA://engine.Objs.Obj#addForce&#10;addbound&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;addbou&#9;PSI&#9;JAVA://project.Collidision#addBoundingBox&#10;addUI&#9;PSI&#9;JAVA://project.Collidision#addUIObj" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535552855903" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535552950975" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/engine/Objs" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../game_RobotArm" />
@@ -560,7 +558,28 @@
       <option name="project" value="LOCAL" />
       <updated>1531973304167</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="finish basic model import">
+      <created>1535552833363</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1535552833363</updated>
+    </task>
+    <task id="LOCAL-00006" summary="finish basic model import">
+      <created>1535552862365</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1535552862365</updated>
+    </task>
+    <task id="LOCAL-00007" summary="finish basic model import">
+      <created>1535552892669</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1535552892669</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -574,6 +593,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1552" height="880" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5409182" visible="true" weight="0.1859558" />
       <window_info id="Structure" order="1" sideWeight="0.25974026" side_tool="true" weight="0.2360208" />
@@ -679,9 +699,12 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="add texture function" />
     <MESSAGE value="finish basic model import" />
     <option name="LAST_COMMIT_MESSAGE" value="finish basic model import" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1124,17 +1147,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine/Util/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="61" lean-forward="true" selection-start-line="10" selection-start-column="61" selection-end-line="10" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/engine/Physics/ForceFunctions/Force_MoveOnGround.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
           <caret line="140" column="38" lean-forward="true" selection-start-line="140" selection-start-column="38" selection-end-line="140" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine/Util/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="64" lean-forward="true" selection-start-line="17" selection-start-column="64" selection-end-line="17" selection-end-column="64" />
         </state>
       </provider>
     </entry>
