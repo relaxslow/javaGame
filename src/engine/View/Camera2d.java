@@ -5,7 +5,7 @@ import engine.Interface.INeedCreate;
 import engine.Util.Raw;
 
 public class Camera2d extends Camera implements INeedCreate {
-    public Camera2d(InputProperty<Raw> input) throws Exception {
+    public Camera2d(InputProperty<Raw> input)  {
         input.run(raw);
         name = set("name", "camera" + cameraIndex);
     }
@@ -13,17 +13,15 @@ public class Camera2d extends Camera implements INeedCreate {
 
     float ratio;
 
-    float left;
-    float right;
-    float bottom;
-    float top;
+    public float left;
+    public float right;
+    public float bottom;
+    public float top;
     float near;
     float far;
 
     @Override
-    public void create(Raw res) throws Exception {
-
-        canvas = res.getX("canvas");
+    public void create()  {
         keyBoard = canvas.keyBoard;
         mouse = canvas.mouse;
 
@@ -31,19 +29,7 @@ public class Camera2d extends Camera implements INeedCreate {
         initCallBack = raw.get("init");
         if (initCallBack != null)
             initCallBack.init(this);
-
-
-//         ratio=(float) canvas.height / (float) canvas.width;
-//        wid=raw.getX("wid");
-//        hei = wid * ratio;
-//        left=-wid;
-//        right=wid;
-//        bottom=-hei;
-//        top=hei;
-//        near=-20f;
-//        far=20f;
-
-
+        
         left = raw.getX("left");
         right = raw.getX("right");
         bottom = raw.getX("bottom");
@@ -68,6 +54,7 @@ public class Camera2d extends Camera implements INeedCreate {
     float zoomSpeed = 0.1f;
     float minW = 0.1f;
 
+    public boolean zoomed=false;
     public void zoomIn() {
         float zoomSpeedY = zoomSpeed * ratio;
         left += zoomSpeed;
@@ -99,6 +86,8 @@ public class Camera2d extends Camera implements INeedCreate {
     @Override
     public void buildPMatrix() {
         projectMatrix.identity();
+        top=right*canvas.getRatio();
+        bottom=-top;
         projectMatrix.setOrtho(left, right, bottom, top, near, far);
         matrix.set(projectMatrix).mul(viewMatrix);
     }

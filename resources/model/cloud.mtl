@@ -1,0 +1,12 @@
+# Blender MTL File: 'cloud.blend'
+# Material Count: 1
+
+newmtl whiteblue
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.541425 0.612673 0.734118
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2

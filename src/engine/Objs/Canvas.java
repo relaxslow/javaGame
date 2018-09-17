@@ -3,25 +3,30 @@ package engine.Objs;
 import engine.Input.KeyBoard;
 import engine.Input.Mouse;
 import engine.Interface.*;
-import engine.Physics.*;
-import engine.Physics.ForceFunctions.ForceFunction;
+import engine.Objs.Helper.Border;
+import engine.Objs.UIObjs.CharObj;
+import engine.Objs.scenes.*;
+import engine.Physics.BFace;
+import engine.Physics.BVertex;
+import engine.Physics.CollideInfo;
 import engine.Programs.Program;
+import engine.UniformFunctions.UniformFunction;
 import engine.Util.*;
-
 import engine.Util.Error;
 import engine.View.Camera;
-import engine.View.Camera2d;
+import engine.View.CameraUI;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.Version;
-import org.lwjgl.glfw.*;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -89,16 +94,30 @@ public class Canvas implements IParent, IHasName {
         resizeCallBack = new ResizeCallBack(this);
         glfwSetFramebufferSizeCallback(window, resizeCallBack);
 
-        try {
-            addRes(this);
-            addRes(CharObj.pool);//need release gpu res
-//            addRes(GroundInfo.pool);
 
-        } catch (Exception e) {
-            Error.fatalError(e, "can't add canvas");
-        }
+        addInfrastructure();
+
+
     }
 
+    public SceneManager sceneManager = new SceneManager();
+
+    void addInfrastructure() {
+        Res.canvas = this;
+        Obj.canvas = this;
+        UniformFunction.canvas = this;
+        Camera.canvas = this;
+        addRes(this);
+        addRes(CharObj.pool);//contain gpu res,need release
+        addRes(new CloudGenerator(this));
+        addRes(PlatForm.pool);
+
+        PlatForm.sceneManager = sceneManager;
+        PlatFormInfo.sceneManager = sceneManager;
+        MapNode.sceneManager = sceneManager;
+        MapNode.canvas = this;
+        sceneManager.init();
+    }
 
     private void initGl() {
         GL.createCapabilities();
@@ -115,13 +134,14 @@ public class Canvas implements IParent, IHasName {
 
     }
 
-    public Raw allRes = new Raw();
+    public Raw allRes = new Raw("all res in canvas");
 
-    public void addRes(Object res) throws Exception {
+    public void addRes(Object res) {
         if (res instanceof INeedCreate)
-            ((INeedCreate) res).create(allRes);
+            ((INeedCreate) res).create();
 
         allRes.add(((IHasName) res).getName(), res);
+
     }
 
     void cleanAllResources() {
@@ -132,10 +152,10 @@ public class Canvas implements IParent, IHasName {
     }
 
 
-    public Raw renderGroupsNormal = new Raw();
-    public Raw renderGroupOrigin = new Raw();
-    public Raw renderGroupBoundingBox = new Raw();
-    public Raw renderGroupTrackLine = new Raw();
+    public Raw renderGroups_Normal = new Raw("render group: normal in canvas");
+    public Raw renderGroup_Origin = new Raw("render group: origin in canvas");
+    public Raw renderGroup_BoundingBox = new Raw("render group: boundingbox in canvas");
+    public Raw renderGroup_TrackLine = new Raw("render group: trackLine in canvas");
 
     private void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -146,7 +166,7 @@ public class Canvas implements IParent, IHasName {
     }
 
     void renderTrackLines() {
-        renderGroupTrackLine.iterateKeyValue((String programName, Raw group) -> {
+        renderGroup_TrackLine.iterateKeyValue((String programName, Raw group) -> {
             Program program = allRes.get(programName);
             glUseProgram(program.id);
             glClear(GL_DEPTH_BUFFER_BIT);
@@ -159,7 +179,7 @@ public class Canvas implements IParent, IHasName {
     }
 
     void renderNormal() {
-        renderGroupsNormal.iterateKeyValue((String programName, Raw group) -> {
+        renderGroups_Normal.iterateKeyValue((String programName, Raw group) -> {
             Program program = allRes.get(programName);
             glUseProgram(program.id);
             if (programName.equals("textProgram"))
@@ -172,7 +192,7 @@ public class Canvas implements IParent, IHasName {
     }
 
     void renderOrigin() {
-        renderGroupOrigin.iterateKeyValue((String programName, Raw group) -> {
+        renderGroup_Origin.iterateKeyValue((String programName, Raw group) -> {
             Program program = allRes.get(programName);
             glClear(GL_DEPTH_BUFFER_BIT);
             glUseProgram(program.id);
@@ -184,7 +204,7 @@ public class Canvas implements IParent, IHasName {
     }
 
     void renderBoundingBox() {
-        renderGroupBoundingBox.iterateKeyValue((String programName, Raw group) -> {
+        renderGroup_BoundingBox.iterateKeyValue((String programName, Raw group) -> {
             Program program = allRes.get(programName);
             glClear(GL_DEPTH_BUFFER_BIT);
             glUseProgram(program.id);
@@ -219,12 +239,11 @@ public class Canvas implements IParent, IHasName {
         }
     }
 
-    Raw updateGroup = new Raw();
+    public Raw updateGroup = new Raw("update group in canvas");
 
     void updateAll(float interval) {
         updateGroup.iterateValue((ICanUpdate canUpdate) -> {
             canUpdate.getUpdateFun().update(interval, canUpdate);
-//            canUpdate.update(interval);
         });
         calculateAllChildsMatrix(this);//must place after update and before render
     }
@@ -242,12 +261,14 @@ public class Canvas implements IParent, IHasName {
 
     }
 
-    Raw inputGroup = new Raw();
+    Raw inputGroup = new Raw("init group in canvas");
 
     void input() {
 
         inputGroup.iterateValue((ICanInput canInput) -> {
-            canInput.getInputCallBack().input(keyBoard, mouse, canInput);
+            IInput input = canInput.getInputCallBack();
+            if (input != null)
+                input.input(keyBoard, mouse, canInput);
         });
 
     }
@@ -275,12 +296,9 @@ public class Canvas implements IParent, IHasName {
             mouse.input();
 
             while (accumulator >= updateInterval) {
-
                 camera.update(updateInterval);
                 UICamera.update(updateInterval);
-
                 updateWithCollide(updateInterval);
-
                 accumulator -= updateInterval;
             }
 
@@ -297,8 +315,8 @@ public class Canvas implements IParent, IHasName {
                 Thread.yield();
                 try {
                     Thread.sleep(1);
-                } catch (InterruptedException ex) {
-                    Debug.log("fatal error in loop");
+                } catch (InterruptedException e) {
+                    Error.fatalError(e, "fatal error in loop");
                 }
             }
 
@@ -311,12 +329,13 @@ public class Canvas implements IParent, IHasName {
         float remainTime = interval;
 
         while (remainTime > 0) {
-
-            input();
-            applyForcesToAll(interval);
+            sceneManager.constructPlatFroms();
+            runAllFrameTimer(interval);
+            input();//change speed
+            applyForcesToAll(interval);//change speed
 
             collideInfo.reset();
-
+            borderTestAll();
             collideAll();//minCollideTime Changed
             goalTestAll();
             displayTrackLines();
@@ -330,11 +349,12 @@ public class Canvas implements IParent, IHasName {
                 collideTime = remainTime;
                 updateAll(collideTime);
             }
-            if(collideInfo.collidePass==true)
+            if (collideInfo.collidePass == true)
                 break;
-//            runForceTimer();
             remainTime -= collideTime;
+
         }
+
     }
 
 
@@ -349,15 +369,8 @@ public class Canvas implements IParent, IHasName {
         trackVertex = (LineSegment3D) searchFromRoot(name, this);
     }
 
-//    CollideInfo trackLineInfo = new CollideInfo();
 
     private void displayTrackLines() {
-//        trackLineInfo.copy(collideInfo);
-//        if(collideInfo.minCollideTime==-1){
-//            trackVertex.changeLine(Constant.ZERO3f, Constant.ZERO3f);
-//            trackFace.changeLine(Constant.ZERO3f, Constant.ZERO3f);
-//            return;
-//        }
         if (collideInfo.type == CollideInfo.GOAL) {
             trackVertex.changeLine(collideInfo.currentPos, collideInfo.collidePoint);
             trackFace.changeLine(Constant.ZERO3f, Constant.ZERO3f);
@@ -377,7 +390,8 @@ public class Canvas implements IParent, IHasName {
     public void clean() {
         cleanFromRoot(this);
         cleanAllResources();
-
+        trackVertex.clean();
+        trackFace.clean();
 
         glfwDestroyWindow(window);
         keyBoard.clean();
@@ -387,15 +401,15 @@ public class Canvas implements IParent, IHasName {
         errorCallback.free();
     }
 
-    public Camera2d UICamera;
+    public CameraUI UICamera;
     public Camera camera;
     private Matrix4f parentMatrix = new Matrix4f();
 
 
-    Raw childs = new Raw();
+    Raw childs = new Raw("childs in canvas");
 
     @Override
-    public void addChild(IChild obj) throws Exception {
+    public void addChild(IChild obj) {
         childs.add(obj.getName(), obj);
     }
 
@@ -405,10 +419,11 @@ public class Canvas implements IParent, IHasName {
     }
 
 
-    public <T> T getChildX(String name) throws Exception {
+    public <T> T getChildX(String name) {
         T child = childs.get(name);
         if (child == null)
-            throw new Exception("can't find child");
+            Error.fatalError(new Exception("can't find child"), null);
+
         return child;
     }
 
@@ -433,16 +448,10 @@ public class Canvas implements IParent, IHasName {
         return "canvas";
     }
 
-//    public Object getObj(String name) throws Exception {
-//
-//        return searchFromRoot(name, this);
-//
-//
-//    }
 
     Object searchFromRoot(String name, IParent root) {
         Raw childs = root.getChilds();
-        Object result = null;
+        Object result;
         for (Object value : childs.values()) {
             if (value instanceof IChild) {
                 String objName = ((IChild) value).getName();
@@ -462,42 +471,40 @@ public class Canvas implements IParent, IHasName {
         return null;
     }
 
-    public void createObj(IChild obj) {
-        try {
+    public void attachParent(IChild obj) {
+        String parentName = obj.getParentName();
+        if (parentName.equals("canvas")) {
+            addChild(obj);
+            obj.setParent(this);
+        } else {
 
-            String parentName = obj.getParentName();
-
-            if (parentName.equals("canvas")) {
-                addChild(obj);
-                obj.setParent(this);
-            } else {
-
-                IParent parent = searchParentFromRootByName(this, parentName);
-                parent.addChild(obj);
-                obj.setParent(parent);
-            }
-
-            if (obj instanceof INeedCreate) {
-                ((INeedCreate) obj).create(allRes);
-            }
-            if (obj instanceof ICanInput) {
-                if (((ICanInput) obj).getInputCallBack() != null)
-                    inputGroup.add(obj.getName(), obj);
-
-            }
-            if (obj instanceof ICanUpdate) {
-                if (((ICanUpdate) obj).getUpdateFun() != null) {
-                    updateGroup.add(obj.getName(), obj);
-                }
-            }
-            if (obj instanceof IRenderable)
-                ((IRenderable) obj).addToRenderGroups();
-
-        } catch (Exception e) {
-            Error.fatalError(e, "error to create scene Object :" +
-                    obj.getName());
+            IParent parent = searchParentFromRootByName(this, parentName);
+            parent.addChild(obj);
+            obj.setParent(parent);
         }
+    }
 
+    public void createObj(IChild obj) {
+        attachParent(obj);
+
+        if (obj instanceof INeedCreate) {
+            ((INeedCreate) obj).create();
+        }
+        if (obj instanceof ICanInput) {
+            if (((ICanInput) obj).getInputCallBack() != null)
+                inputGroup.add(obj.getName(), obj);
+
+        }
+        if (obj instanceof ICanUpdate) {
+            if (((ICanUpdate) obj).getUpdateFun() != null) {
+                updateGroup.add(obj.getName(), obj);
+            }
+        }
+        if (obj instanceof INeedTestBorder) {
+            borderTestGroup.add(obj.getName(), obj);
+        }
+        if (obj instanceof IRenderable)
+            ((IRenderable) obj).addToRenderGroups();
 
     }
 
@@ -518,34 +525,39 @@ public class Canvas implements IParent, IHasName {
         return result;
     }
 
-    public void setUICamera(String name) throws Exception {
+    public void setUICamera(String name) {
         UICamera = allRes.get(name);
         if (UICamera.getInputCallBack() != null)
             inputGroup.add(name, UICamera);
     }
 
-    public void setSceneCamera(String name) throws Exception {
+    public void setSceneCamera(String name) {
         camera = allRes.get(name);
         if (camera.getInputCallBack() != null)
             inputGroup.add(name, camera);
     }
 
-    public Raw collideGroups = new Raw();
+    public Raw collideGroups = new Raw("collideGroups in canvas");
 
 
-    public void addCollideGroup(String name) throws Exception {
-        collideGroups.add(name, new Raw());
+    public void addCollideGroup(String name) {
+        collideGroups.add(name, new Raw("collideGroup:" + name));
     }
 
-    void addToCollideGroup(String name, ICollidable obj) throws Exception {
+    public void addToCollideGroup(String name, ICollidable obj) {
         Raw collideGroup = collideGroups.getX(name);
         collideGroup.add(obj.getName(), obj);
     }
 
-    Raw collidePossibilities = new Raw();
+    public void removeFromCollideGroup(String name, ICollidable obj) {
+        Raw collideGroup = collideGroups.getX(name);
+        collideGroup.remove(obj.getName());
+    }
 
-    public void allowCollide(String group1Name, String group2Name, ICollideOccur fun) throws Exception {
-        Raw possibility = new Raw();
+    Raw collidePossibilities = new Raw("collide possibilities group");
+
+    public void allowCollide(String group1Name, String group2Name, ICollideOccur fun) {
+        Raw possibility = new Raw("collide Possibilitie:" + group1Name + "|" + group2Name);
         possibility.add("collideOccurFun", fun);
         possibility.add("group1", collideGroups.get(group1Name));
         possibility.add("group2", collideGroups.get(group2Name));
@@ -624,7 +636,7 @@ public class Canvas implements IParent, IHasName {
         ArrayList<BFace> otherFaces = otherObj.getBoundingBox().faces;
         for (int i = 0; i < selfPoints.size(); i++) {
             collideVertex = selfPoints.get(i);
-            if(!collideVertex.collideable)continue;
+            if (!collideVertex.collideable) continue;
             collideVertex.update();
             for (int j = 0; j < otherFaces.size(); j++) {
                 collideFace = otherFaces.get(j);
@@ -744,8 +756,8 @@ public class Canvas implements IParent, IHasName {
         return false;
     }
 
-    Player player;
-    Raw goalTestGroup = new Raw();
+    public Player player;
+    Raw goalTestGroup = new Raw("goal Test Group");
 
     void goalTestAll() {
         goalTestGroup.iterateValue((INeedGoalTest obj) -> {
@@ -753,8 +765,51 @@ public class Canvas implements IParent, IHasName {
         });
     }
 
+    public Raw borderTestGroup = new Raw("board test group");
 
-    Scene scene;
+    ArrayList<String> deleteIndexs = new ArrayList<>();
+
+    private void borderTestAll() {
+
+        borderTestGroup.iterateKeyValue((String key, INeedTestBorder obj) -> {
+            if (obj.isOutOfBorder()) {
+                deleteIndexs.add(key);
+            }
+        });
+        for (int i = 0; i < deleteIndexs.size(); i++) {
+            String index = deleteIndexs.get(i);
+            INeedTestBorder obj = borderTestGroup.get(index);
+            obj.eliminate();
+            borderTestGroup.remove(index);
+        }
+        deleteIndexs.clear();
+    }
+
+    public Border eliminateBorder;
+    public Border visualBorder;
+    public Border generateBorder;
+
+    Raw frameTimerGroup = new Raw("frame timer group");
+
+    public void addFrameTimer(FrameTimer timer) {
+        frameTimerGroup.add(timer.name, timer);
+    }
+
+    public void removeFrameTimer(FrameTimer timer) {
+        frameTimerGroup.remove(timer.name);
+    }
+
+    private void runAllFrameTimer(float interval) {
+        frameTimerGroup.iterateValue((FrameTimer timer) -> {
+            timer.countDown(interval);
+        });
+    }
+
+    public float getRatio() {
+        float ratio = (float) height / (float) width;
+        return ratio;
+    }
+
 }
 
 

@@ -1,7 +1,6 @@
 package engine.Objs;
 
 import engine.Interface.*;
-import engine.Physics.BVertex;
 import engine.Physics.BoundingBox;
 import engine.Physics.BoundingMesh;
 import engine.Util.Constant;
@@ -10,49 +9,28 @@ import engine.Util.Raw;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
+public class PhysicObj extends Obj implements IPhysics {
     PhysicObj() {
+        super();
     }
 
-    public PhysicObj(InputProperty<Raw> input) throws Exception {
+    public PhysicObj(String meshName) {
+        super(meshName);
+    }
+
+    public PhysicObj(InputProperty<Raw> input) {
         super(input);
     }
 
-    public void create(Raw res) throws Exception {
-        attachBoundingBox(res);
-        super.create(res);
-       
+    public void create() {
+        super.create();
+
 
     }
 
-    public BoundingMesh boundingMesh;
-
-    @Override
-    public void removeFromRenderGroups() {
-        super.removeFromRenderGroups();
-        if (boundingMesh != null) {
-            removeFromGroup(canvas.renderGroupBoundingBox, boundingMesh.program.name);
-        }
-    }
-
-    @Override
-    public void addToRenderGroups() throws Exception {
-        super.addToRenderGroups();
-        if (boundingMesh != null) {
-            addToGroup(canvas.renderGroupBoundingBox, boundingMesh.program.name);
-        }
-    }
-
-    public void renderBoundingBox() {
-
-        connectUniforms(boundingMesh);
-        boundingMesh.render();
-
-    }
 
     public Vector3f speed = new Vector3f();
     public Vector3f globalSpeed = new Vector3f();
@@ -72,22 +50,12 @@ public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
         return globalSpeed;
     }
 
-    @Override
-    public Vector3f getSpeed() {
-        return speed;
-    }
 
     public Vector3f offset = new Vector3f();
 
-    public Raw forces = new Raw();
+    public Raw forces = new Raw("objs forces");
 
-    //    ArrayList<String> markedDeleteForces = new ArrayList<>();
-//
-//
-//    @Override
-//    public void markDelete(IForceFunction forceFun) {
-//        markedDeleteForces.add(forceFun.getName());
-//    }
+
     private String getClassName(Class<?> aClass) {
         String fullName = aClass.getName();
         String name = fullName.substring(fullName.lastIndexOf(".") + 1);
@@ -98,40 +66,49 @@ public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
         String name = getClassName(forceClass);
         return forces.get(name);
     }
-    
-    public void addForce(Class<?> forceClass, Object data)  {
-        try
-        {
-            IForceFunction forceFun = (IForceFunction) forceClass.newInstance();
-            forceFun.setHostObj(this);
-            forceFun.setScene(canvas.scene);
-            if (forceFun instanceof INeedData)
-                ((INeedData) forceFun).passInitData(data);
-            forces.add(forceFun.getName(), forceFun);
-            if (forceFun instanceof IInput) {
-                inputCallBack = (IInput) forceFun;
-                canvas.inputGroup.add(this.name, this);
-            }
-            if (forceFun instanceof IGoalTest) {
-                goalTestFun = (IGoalTest) forceFun;
-                canvas.goalTestGroup.add(this.name, this);
-            }
-        }catch(Exception e){
-            Error.fatalError(e,"error in addForce");
+
+    public void addForce(Class<?> forceClass, Object data) {
+
+        IForceFunction forceFun = null;
+        try {
+            forceFun = (IForceFunction) forceClass.newInstance();
+        } catch (Exception e) {
+            Error.fatalError(e, "error add force to obj " + name);
         }
-       
+        forceFun.setHostObj(this);
+        if (forceFun instanceof INeedData)
+            ((INeedData) forceFun).init(data);
+        forces.add(forceFun.getName(), forceFun);
+        if (forceFun instanceof IInput) {
+            inputCallBack = (IInput) forceFun;
+            canvas.inputGroup.add(this.name, this);
+        }
+        if (forceFun instanceof IGoalTest) {
+            goalTestFun = (IGoalTest) forceFun;
+            canvas.goalTestGroup.add(this.name, this);
+        }
+        if (forceFun instanceof ICountDown) {
+            ((ICountDown) forceFun).startTimer();
+        }
+
+
     }
 
-//    public void addForce(String forceName) throws Exception {
+    //    public void addForce(String forceName)  {
 //        Class myClass = Class.forName("engine.Physics.ForceFunctions." + forceName);
 //        IForceFunction forceFun = (IForceFunction) myClass.newInstance();
 //
 //        forces.add(forceName, forceFun);
 //    }
+    public void removeAllForce() {
+        
+        forces.iterateKeyValueX((String name,IForceFunction fun) -> {
+            removeCheck(fun);
+            forces.remove(name);
+        });
+    }
 
-    public void removeForce(Class<?> forceClass) {
-        String name = getClassName(forceClass);
-        IForceFunction forceFun = forces.get(name);
+    void removeCheck(IForceFunction forceFun) {
         if (forceFun instanceof IInput) {
             inputCallBack = null;
             canvas.inputGroup.remove(this.name);
@@ -140,10 +117,17 @@ public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
             goalTestFun = null;
             canvas.goalTestGroup.remove(this.name);
         }
+    }
+
+    public void removeForce(Class<?> forceClass) {
+        String name = getClassName(forceClass);
+        IForceFunction forceFun = forces.get(name);
+        removeCheck(forceFun);
+
         forces.remove(name);
 
     }
-    
+
     //there should not have add or remove force in the apply function(concurrentModification)
     public void applyForces(float interval) {//change speed of current frame
         Iterator it = forces.entrySet().iterator();
@@ -155,13 +139,18 @@ public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
 
     }
 
+    @Override
+    public Vector3f getSpeed() {
+        return speed;
+    }
+
     private Vector3f relateVel = new Vector3f();
 
     public Vector3f getRelateVel() {
         return relateVel;
     }
 
-    Vector3f accelerate = new Vector3f();
+    public Vector3f accelerate = new Vector3f();
     Vector3f globalAccelerate = new Vector3f();
 
     public Vector3f getAccelerate() {
@@ -193,43 +182,25 @@ public class PhysicObj extends Obj implements IRenderBoundingBox,  ICollidable {
     public Vector3f getRelateAccelerate() {
         return relateAccelerate;
     }
-    
-    
+
+
     public Matrix4f getModelMatrix() {
         return modelMatrix;
     }
+
     Matrix4f invertModelMatrix;
-    public Matrix4f getInvertModelMatrix(){
+
+    public Matrix4f getInvertModelMatrix() {
         return modelMatrix.invert(invertModelMatrix);
     }
 
-    BoundingBox boundingBox;
 
-    void attachBoundingBox(Raw res) throws Exception {
-        String boundingBoxName = raw.get("boundingBox");
-        if (boundingBoxName != null)
-            boundingMesh = res.getX(boundingBoxName);
-        
-        if (this instanceof ICollidable)
-            boundingBox = new BoundingBox(boundingMesh, this);
-    }
-
-
-
-
-    public BoundingBox getBoundingBox() {
-        return boundingBox;
-    }
-
-
-    Raw collideExclude = new Raw();
+    Raw collideExclude = new Raw("collide exclude");
 
     public void addCollideExclude(ICollidable obj) {
-        try {
-            collideExclude.add(obj.getName(), obj);
-        } catch (Exception e) {
-            Error.fatalError(e, "error in add CollideExclude");
-        }
+
+        collideExclude.add(obj.getName(), obj);
+
     }
 
     public void removeCollideExclude(ICollidable obj) {

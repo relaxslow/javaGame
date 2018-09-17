@@ -4,17 +4,18 @@ import engine.Buffer.*;
 import engine.Interface.ICanInput;
 import engine.Interface.InputProperty;
 import engine.Meshes.ElementMesh;
+import engine.Meshes.LineMesh;
 import engine.Util.Raw;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 
-public class LineObj extends Obj implements ICanInput {
-    Vector4f color;
-    Vector3f[] points;
+public class LineObj extends Obj  {
+//    Vector4f color;
+public Vector3f[] points;
 
-    public LineObj(InputProperty<Raw> input) throws Exception {
+    public LineObj(InputProperty<Raw> input)  {
         super(input);
 
     }
@@ -23,8 +24,7 @@ public class LineObj extends Obj implements ICanInput {
     }
 
     @Override
-    public void create(Raw res) throws Exception {
-        canvas = res.getX("canvas");
+    public void create()  {
         camera = raw.getX("camera");//draw in 2d or 3d
 
         color = raw.getX("u_Color");
@@ -34,14 +34,13 @@ public class LineObj extends Obj implements ICanInput {
                 "lineMesh" + LineMesh.lineIndex,
                 getFloatArr(points),
                 points.length,
-                getIntArr(points),
-                res
+                getIntArr(points)
         );
         attachCallbacks();
 
     }
 
-    int[] getIntArr(Vector3f[] points) {
+    public int[] getIntArr(Vector3f[] points) {
         int[] indices = new int[(points.length - 1) * 2];
         for (int i = 0; i < points.length - 1; i++) {
             indices[i * 2] = i;
@@ -50,7 +49,7 @@ public class LineObj extends Obj implements ICanInput {
         return indices;
     }
 
-    float[] getFloatArr(Vector3f[] points) {
+    public float[] getFloatArr(Vector3f[] points) {
         float[] vertexPos = new float[points.length * 3];
         for (int i = 0; i < points.length; i++) {
             vertexPos[i * 3] = points[i].x;
@@ -64,7 +63,7 @@ public class LineObj extends Obj implements ICanInput {
         this.color = color;
     }
 
-    public void changeLine(Vector3f[] points) throws Exception {
+    public void changeLine(Vector3f[] points)  {
         this.points = points;
 
         float[] vertexPos = getFloatArr(points);
@@ -86,49 +85,3 @@ public class LineObj extends Obj implements ICanInput {
 
 }
 
-class LineMesh extends ElementMesh {
-    static int lineIndex = 0;
-    int pointNum;
-
-    LineMesh(String name, float[] vertexPos, int pointNum, int[] indices, Raw res) throws Exception {
-        this.name = name;
-        lineIndex++;
-        this.pointNum = pointNum;
-        primitiveType = GL_LINES;
-        program = res.getX("simple3DProgram");
-        attributesLocation = program.attributes;
-        getAttribute(vertexPos, indices);
-        getUniform(res);
-        generateVAO(true);
-        count = ibo.pointNum;
-        offset = 0;
-    }
-
-
-    void getAttribute(float[] vertexPos, int[] indices) throws Exception {
-        vbos = new Raw();
-        if (pointNum < 2) {
-            return;
-        }
-        vbos.add("a_Position", new VBO_D((VBORaw positionData) -> {
-            positionData.add("pointNum", pointNum);
-            positionData.setDataAmount("a_Position", 3);
-            positionData.add("raw", vertexPos);
-        }));
-        ibo = new IBO_D((Raw iboRaw) -> {
-            iboRaw.add("name", "lineMesh" + index + "IBO");
-            iboRaw.add("raw", indices);
-        });
-
-    }
-
-
-    @Override
-    public void clean() {
-        vbos.iterateValue((VBO vbo) -> {
-            vbo.clean();
-        });
-        ibo.clean();
-        super.clean();
-    }
-}

@@ -1,17 +1,18 @@
 package engine.Objs;
 
 import engine.Interface.InputProperty;
-import engine.Util.Error;
+import engine.Objs.UIObjs.CharObj;
+import engine.Objs.UIObjs.FontTextObj;
 import engine.Util.Raw;
 
 import java.nio.charset.Charset;
 
-public class ScoreObj extends FontTextObj  {
+public class ScoreObj extends FontTextObj {
 
     int score = 0;
     int digitNum = 5;
 
-    public ScoreObj(InputProperty<Raw> input) throws Exception {
+    public ScoreObj(InputProperty<Raw> input) {
         super(input);
 
 
@@ -33,11 +34,9 @@ public class ScoreObj extends FontTextObj  {
 
         childs.iterateValue((CharObj charObj) -> {
             int charIndex = charObj.charIndex;
-            try {
-                charObj.changeChar(chars[charIndex]);
-            } catch (Exception e) {
-                Error.fatalError(e,"change Char failed");
-            }
+
+            charObj.changeChar(chars[charIndex]);
+        
         });
 
     }
@@ -53,13 +52,13 @@ public class ScoreObj extends FontTextObj  {
     }
 
     @Override
-    public void create(Raw res) throws Exception {
-        canvas = res.get("canvas");
-        camera = raw.get("camera");
-        originMesh = res.get("NullMesh");
+    public void create() {
+        canvas = canvas.allRes.get("canvas");
+        attachCamera();
+        originMesh = canvas.allRes.get("NullMesh");
         getcolor();
         attachCallbacks();
-        fontTexture = res.getX(raw.getX("fontTextureName"));
+        fontTexture = canvas.allRes.getX(raw.getX("fontTextureName"));
         scoreToText();
         buildText();
 

@@ -7,6 +7,7 @@ import engine.Buffer.VBO_D;
 
 import engine.Interface.InputProperty;
 
+import engine.Util.Error;
 import engine.Util.Raw;
 import engine.Util.Tools;
 import org.joml.Vector2f;
@@ -17,10 +18,12 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+
 class Mtl {
     Vector3f diffuse;
 
 }
+
 class Index {
     int pos;// in verteice
     int texCoord;
@@ -44,65 +47,69 @@ class Index {
 }
 
 public class FileMesh extends ElementMesh {
-    static int fileIndex=0;
-    public FileMesh(InputProperty<Raw> input) throws Exception {
+    static int fileIndex = 0;
+
+    public FileMesh(InputProperty<Raw> input) {
         input.run(raw);
         fileIndex++;
         name = raw.getX("name");
-        parseMtl(name);
-        parseModel(name);
+        try {
+            parseMtl(name);
+            parseModel(name);
+        } catch (Exception e) {
+            Error.fatalError(e, "error in ParseModel");
+        }
+
     }
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create() {
         float[] vertexTexCoords = raw.get("vertexTexCoords");
         if (vertexTexCoords == null)
-            program = res.getX("Program-modelNoTex");
+            program = canvas.allRes.getX("Program-modelNoTex");
         else
-            program = res.getX("Program-model");
+            program = canvas.allRes.getX("Program-model");
         getPrimitiveType();
         attributesLocation = program.attributes;
         getAttribute();
-        getUniform(res);
-        getTexture(res);
-       generateVAO(true);
+        getUniform(canvas.allRes);
+        getTexture(canvas.allRes);
+        generateVAO(true);
         count = ibo.pointNum;
         offset = 0;
     }
 
     void parseMtl(String fileName) throws Exception {
-        try {
-            List<String> lines = Tools.readAllLines(fileName + ".mtl");
-            Raw mtls = new Raw();
-            raw.add("mtls", mtls);
-            Mtl currentMtl = null;
-            for (String line : lines) {
-                String[] tokens = line.split("\\s+");
-                switch (tokens[0]) {
-                    case "newmtl":
-                        currentMtl = new Mtl();
-                        mtls.add(tokens[1], currentMtl);
-                        break;
-                    case "Kd":
-                        currentMtl.diffuse = new Vector3f(
-                                Float.parseFloat(tokens[1]),
-                                Float.parseFloat(tokens[2]),
-                                Float.parseFloat(tokens[3]));
-                        break;
-                    default:
-                        break;
 
-                }
+        List<String> lines = Tools.readAllLines(fileName + ".mtl");
+        Raw mtls = new Raw("materials");
+        raw.add("mtls", mtls);
+        Mtl currentMtl = null;
+        for (String line : lines) {
+            String[] tokens = line.split("\\s+");
+            switch (tokens[0]) {
+                case "newmtl":
+                    currentMtl = new Mtl();
+                    mtls.add(tokens[1], currentMtl);
+                    break;
+                case "Kd":
+                    currentMtl.diffuse = new Vector3f(
+                            Float.parseFloat(tokens[1]),
+                            Float.parseFloat(tokens[2]),
+                            Float.parseFloat(tokens[3]));
+                    break;
+                default:
+                    break;
+
             }
-        } catch (Exception e) {
-
         }
-
+       
 
     }
 
 
     void parseModel(String fileName) throws Exception {
+
         List<String> lines = Tools.readAllLines(fileName + ".obj");
 
         List<Vector3f> vertices = new ArrayList<>();
@@ -239,13 +246,14 @@ public class FileMesh extends ElementMesh {
 
     }
 
-    int getPosInVertexPosBuffer(int indexInVertexs, List<Index> indexs) throws Exception {
+    int getPosInVertexPosBuffer(int indexInVertexs, List<Index> indexs) {
         for (int i = 0; i < indexs.size(); i++) {
             if (indexInVertexs == indexs.get(i).pos) {
                 return i;
             }
         }
-        throw new Exception("can't find vertex index in vertex position raw");
+        Error.fatalError(new Exception("can't find vertex index in vertex position raw"), null);
+        return -1;
     }
 
     void addEdge(List<Edge> edgeGroup, Edge edge) {
@@ -278,10 +286,10 @@ public class FileMesh extends ElementMesh {
         }
     }
 
-    void getAttribute() throws Exception {
+    void getAttribute() {
         int pointNum = raw.getX("pointNum");
         float[] vertexNormal = raw.getX("vertexNormal");
-        vbos = new Raw();
+        vbos = new Raw("vbos");
         float[] vertexPos = raw.getX("vertexPos");
         vbos.add("a_Position", new VBO_D((VBORaw positionData) -> {
             positionData.add("pointNum", pointNum);
@@ -308,7 +316,7 @@ public class FileMesh extends ElementMesh {
 
 
         ibo = new IBO_D((Raw iboRaw) -> {
-            iboRaw.add("name", "fileModel"+fileIndex+"IBO");
+            iboRaw.add("name", "fileModel" + fileIndex + "IBO");
 
             if (primitiveType == GL_TRIANGLES)
                 iboRaw.add("raw", raw.getX("triangleIndice"));

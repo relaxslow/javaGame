@@ -12,7 +12,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
 
 public class Mouse {
     Vector2d previousPos = new Vector2d();
-    Vector2d currentPos = new Vector2d();
+    public Vector2d currentPos = new Vector2d();
     boolean inWindow;
     public boolean leftButtonPressed;
     public boolean rightButtonPressed;

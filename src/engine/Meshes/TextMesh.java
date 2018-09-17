@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class TextMesh extends ElementMesh {
-    public TextMesh(String name, Raw res, Texture texture) throws Exception {
+    public TextMesh(String name, Raw res, Texture texture)  {
         this.name = name;
 
         raw.add("primitiveType", GL_TRIANGLES);
@@ -25,7 +25,7 @@ public class TextMesh extends ElementMesh {
 
         
         attributesLocation = program.attributes;
-        vbos = new Raw();
+        vbos = new Raw("vbos");
 
         vbos.add("a_Position", res.getX("uiTextVertexPos_VBO"));
 
@@ -42,7 +42,7 @@ public class TextMesh extends ElementMesh {
 
         }));
 
-        textures = new Raw();
+        textures = new Raw("textures");
         textures.add("u_Texture1", texture);
 
 
@@ -61,10 +61,6 @@ public class TextMesh extends ElementMesh {
     public void clean() {
         VBO_D textureCoordsVBO = vbos.get("a_TextureCoords");
         textureCoordsVBO.clean();
-//        vbos.iterateValue((engine.VBO vbo) -> {
-//            vbo.clean();
-//        });
-//        ibo.clean();
         super.clean();
 
     }

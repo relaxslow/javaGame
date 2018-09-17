@@ -6,18 +6,18 @@ import engine.Interface.IInput;
 import engine.Interface.IUpdate;
 import engine.Util.Raw;
 
-abstract class SceneObject {
+public abstract class SceneObject {
     public static int index;
     public String name = null;
-    IInit initCallBack;
-    IUpdate updateCallBack;
-    IInput inputCallBack;
-    IGoalTest goalTestFun;
+    public IInit initCallBack;
+    public IUpdate updateCallBack;
+    public IInput inputCallBack;
+    public  IGoalTest goalTestFun;
     
     public String getName() {
         return name;
     }
 
-    public Raw raw = new Raw();
+    public Raw raw = new Raw("scene object raw data");
 
 }

@@ -14,7 +14,7 @@ public class ArrayMesh extends Mesh implements INeedCreate, INeedClean {
     int first;
     int count;
 
-    public ArrayMesh(InputProperty<Raw> input) throws Exception {
+    public ArrayMesh(InputProperty<Raw> input)  {
         input.run(raw);
     }
 
@@ -23,16 +23,16 @@ public class ArrayMesh extends Mesh implements INeedCreate, INeedClean {
     }
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create() {
         name = raw.getX("name");
-        program = res.getX(raw.getX("program"));
+        program = canvas.allRes.getX(raw.getX("program"));
 
         getPrimitiveType();
 
 
-        getAttribute(res);
-        getUniform(res);
-        getTexture(res);
+        getAttribute(canvas.allRes);
+        getUniform(canvas.allRes);
+        getTexture(canvas.allRes);
 
         generateVAO(true);
 

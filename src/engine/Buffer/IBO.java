@@ -16,15 +16,15 @@ import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 public class IBO extends Res implements INeedCreate, INeedClean {
     public int id;
     public int pointNum;
-    Raw raw = new Raw();
+    Raw raw = new Raw("IBO");
     private int[] indiceData;
 
-    public IBO(InputProperty<Raw> input) throws Exception {
+    public IBO(InputProperty<Raw> input)  {
         input.run(raw);
     }
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create()  {
         name = raw.getX("name");
         generateNewBuffer(raw.getX("raw"), true);
     }

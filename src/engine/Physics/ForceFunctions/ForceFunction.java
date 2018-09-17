@@ -2,12 +2,7 @@ package engine.Physics.ForceFunctions;
 
 import engine.Interface.*;
 import engine.Objs.PhysicObj;
-import engine.Objs.Scene;
-import engine.Physics.BVertex;
-import engine.Physics.ForceTimer;
-import engine.Util.Raw;
-
-import java.util.LinkedList;
+import engine.Objs.scenes.Scene;
 
 public abstract class ForceFunction implements IForceFunction {
 
@@ -25,7 +20,7 @@ public abstract class ForceFunction implements IForceFunction {
         return name;
     }
     
-    ICollidable hostObj;
+    IPhysics hostObj;
   
 
     public void setHostObj(PhysicObj obj) {

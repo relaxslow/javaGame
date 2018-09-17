@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class ElementMesh extends Mesh implements INeedCreate, INeedClean {
 
-    public ElementMesh(InputProperty<Raw> input) throws Exception {
+    public ElementMesh(InputProperty<Raw> input)  {
         input.run(raw);
     }
 
@@ -28,17 +28,17 @@ public class ElementMesh extends Mesh implements INeedCreate, INeedClean {
     }
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create()  {
         name = raw.getX("name");
-        program = res.getX(raw.getX("program"));
+        program = canvas.allRes.getX(raw.getX("program"));
         getPrimitiveType();
 
 
-        getIndice(res);
+        getIndice(canvas.allRes);
 
-        getAttribute(res);
-        getUniform(res);
-        getTexture(res);
+        getAttribute(canvas.allRes);
+        getUniform(canvas.allRes);
+        getTexture(canvas.allRes);
 
         generateVAO(true);
 
@@ -52,7 +52,7 @@ public class ElementMesh extends Mesh implements INeedCreate, INeedClean {
     }
 
     @Override
-    public void generateVAO(boolean generateNew) throws Exception {
+    public void generateVAO(boolean generateNew)  {
         if (generateNew)
             vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);
@@ -64,12 +64,12 @@ public class ElementMesh extends Mesh implements INeedCreate, INeedClean {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
-    public void buildMesh() throws Exception {
+    public void buildMesh()  {
        
 
     }
 
-    void getIndice(Raw res) throws Exception {
+    void getIndice(Raw res)  {
         String[] indices = raw.getX("indices");
         if (primitiveType == GL_TRIANGLES)
             ibo = res.getX(indices[0]);

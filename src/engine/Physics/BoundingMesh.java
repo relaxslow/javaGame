@@ -5,6 +5,7 @@ import engine.Buffer.VBO;
 import engine.Buffer.VBORaw;
 import engine.Buffer.VBO_D;
 import engine.Meshes.ElementMesh;
+import engine.Util.Error;
 import engine.Util.Raw;
 import engine.Util.Tools;
 import org.joml.Vector3f;
@@ -18,9 +19,13 @@ public class BoundingMesh extends ElementMesh {
     public ArrayList<Vertex> points;
     public ArrayList<Face> faces;
 
-    public BoundingMesh(String file) throws Exception {
+    public BoundingMesh(String file) {
         this.name = file;
-        parseFile(file);
+        try {
+            parseFile(file);
+        } catch (Exception e) {
+            Error.fatalError(e, "error parse file" + file);
+        }
     }
 
     private void parseFile(String name) throws Exception {
@@ -88,26 +93,25 @@ public class BoundingMesh extends ElementMesh {
 
     }
 
-  
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create() {
 
-        program = res.getX("simple3DProgram");
+        program = canvas.allRes.getX("simple3DProgram");
         primitiveType = GL_LINES;
         attributesLocation = program.attributes;
 
-        getAttribute(res);
-        getUniform(res);
+        getAttribute(canvas.allRes);
+        getUniform(canvas.allRes);
         generateVAO(true);
         count = ibo.pointNum;
         offset = 0;
     }
 
     @Override
-    public void getAttribute(Raw res) throws Exception {
+    public void getAttribute(Raw res) {
 
-        vbos = new Raw();
+        vbos = new Raw("vbos in BoundingMesh" );
 
         vbos.add("a_Position", new VBO_D((VBORaw posData) -> {
             int pointNum = raw.getX("pointNum");

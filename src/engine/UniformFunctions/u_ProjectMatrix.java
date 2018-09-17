@@ -4,11 +4,10 @@ import engine.Objs.Canvas;
 import engine.Objs.Obj;
 
 public class u_ProjectMatrix extends UniformFunction {
-    Canvas canvas;
+   
 
-    public u_ProjectMatrix(Canvas canvas) {
+    public u_ProjectMatrix() {
         name = "u_ProjectMatrix";
-        this.canvas = canvas;
 
     }
 

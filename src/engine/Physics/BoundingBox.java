@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class BoundingBox {
     public ArrayList<BVertex> points = new ArrayList<>();
     public ArrayList<BFace> faces = new ArrayList<>();
-    public Raw indexedPoints=new Raw();
-    
+    public Raw indexedPoints = new Raw("indexes points");
+
     public BoundingBox(BoundingMesh boundingMesh, ICollidable obj) {
         for (int i = 0; i < boundingMesh.points.size(); i++) {
             Vertex v = boundingMesh.points.get(i);
             BVertex bv = new BVertex(v, obj);
-         
+
             points.add(bv);
         }
 
@@ -35,14 +35,11 @@ public class BoundingBox {
                 faceIndex++;
             }
         }
-        
-        for (int i=0;i<points.size();i++){
+
+        for (int i = 0; i < points.size(); i++) {
             BVertex point = points.get(i);
-            try {
-                indexedPoints.add(String.valueOf(point.indice),point);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            indexedPoints.add(String.valueOf(point.indice), point);
+            
         }
 
 

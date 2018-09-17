@@ -23,17 +23,16 @@ public class VBO extends Res implements INeedCreate, INeedClean {
     int dataType;
     public int stride;
 
-    public VBORaw data = new VBORaw();
+    public VBORaw data = new VBORaw("VBORaw");
 
-    public VBO(InputProperty<VBORaw> input) throws Exception {
-
+    public VBO(InputProperty<VBORaw> input) {
         input.run(data);
     }
 
     float[] pointData;
 
     @Override
-    public void create(Raw allRes) throws Exception {
+    public void create()  {
         name = data.getX("name");
         generateNewBuffer(data.getX("raw"), data.getX("pointNum"),true);
 

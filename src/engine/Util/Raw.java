@@ -1,28 +1,46 @@
 package engine.Util;
 
-import engine.Interface.IFun1;
-import engine.Interface.IFun1X;
-import engine.Interface.IFun2;
-import engine.Interface.IFun2X;
+import engine.Interface.*;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Raw extends LinkedHashMap<String, Object> {
-    public void add(String name, Object obj) throws Exception {
+    String name;
+    boolean operateOn = false;
+
+    public Raw(String name) {
+        this.name = name;
+    }
+
+    HashMap<String, Object> createList = new HashMap<>();
+
+    public void add(String name, Object obj) {
         if (Debug.DEBUG == true) {
             if (containsKey(name))
-                throw new Exception("name " + name + " aleady exist!!");
+                Error.fatalError(new Exception("name " + name + " aleady exist!!"), null);
         }
-        this.put(name, obj);
+        if (operateOn) {
+            createList.put(name, obj);
+        } else {
+            this.put(name, obj);
+        }
     }//set
 
+    public void remove(String key) {
+        if (operateOn) {
+            deleteList.add(key);
+        } else {
+            super.remove(key);
+        }
+    }
 
-    public <T> T getX(String name) throws Exception {
+    public <T> T getX(String name) {
         if (containsKey(name))
             return (T) super.get(name);
-        else
-            throw new Exception("property no define : " + name);
+        else {
+            Error.fatalError(new Exception("property no define : " + name), null);
+            return null;
+        }
 
     }
 
@@ -31,41 +49,89 @@ public class Raw extends LinkedHashMap<String, Object> {
 
     }
 
-    public <T> void iterateValueX(IFun1X<T> fun) throws Exception {
+    ArrayList<String> deleteList = new ArrayList<>();
+
+
+    void safeDeleteAndAdd() {
+        for (int i = 0; i < deleteList.size(); i++) {
+            String key = deleteList.get(i);
+            remove(key);
+        }
+        deleteList.clear();
+        for(Map.Entry<String,Object> entry:createList.entrySet()){
+            add(entry.getKey(),entry.getValue());
+        }
+        createList.clear();
+    }
+
+    public <T> void iterateValueX(IFun1X<T> fun) {
+        operateOn = true;
         for (Object object : values()) {
             fun.run((T) object);
         }
+        operateOn = false;
+        safeDeleteAndAdd();
+
     }
 
     public <T> void iterateValue(IFun1<T> fun) {
+        operateOn = true;
         for (Object object : values()) {
             fun.run((T) object);
         }
+        operateOn = false;
+        safeDeleteAndAdd();
+
     }
 
     public <T> void iterateKeyValue(IFun2<String, T> fun) {
+        operateOn = true;
         for (Map.Entry<String, Object> entry : entrySet()) {
             fun.run(entry.getKey(), (T) entry.getValue());
         }
+        operateOn = false;
+        safeDeleteAndAdd();
+
     }
 
+    public <T> void iterateValueSafeDelete(IFun4<T> fun) {
 
-    public <T> void iterateKeyValueX(IFun2X<String, T> fun) throws Exception {
+        Iterator<Map.Entry<String, Object>> it = entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> pair = it.next();
+            fun.run((T) pair.getValue(), it);
+//            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+    }
+
+    public <T> void iterateKeyValueX(IFun2X<String, T> fun) {
+        operateOn = true;
         for (Map.Entry<String, Object> entry : entrySet()) {
             fun.run(entry.getKey(), (T) entry.getValue());
         }
+        operateOn = false;
+        safeDeleteAndAdd();
+
     }
 
-    public void iterateKey(IFun1<String> fun) {
+//    public void iterateKey(IFun1<String> fun) {
+//        operateOn=true;
+//        for (String key : keySet()) {
+//            fun.run(key);
+//        }
+//        operateOn=false;
+//    }
+
+    public void iterateKeyX(IFun1X<String> fun) {
+        operateOn = true;
         for (String key : keySet()) {
             fun.run(key);
         }
+        operateOn = false;
+        safeDeleteAndAdd();
+
     }
 
-    public void iterateKeyX(IFun1X<String> fun) throws Exception {
-        for (String key : keySet()) {
-            fun.run(key);
-        }
-    }
 
 }

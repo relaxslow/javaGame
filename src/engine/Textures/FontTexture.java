@@ -1,6 +1,7 @@
 package engine.Textures;
 
 import engine.Interface.InputProperty;
+import engine.Util.Error;
 import engine.Util.Raw;
 
 import javax.imageio.ImageIO;
@@ -22,12 +23,12 @@ public class FontTexture extends TextureAtlas {
     public String charSetName;
     public Map<Byte, CharInfo> charMap;
 
-    public FontTexture(InputProperty<Raw> input) throws Exception {
+    public FontTexture(InputProperty<Raw> input)  {
         super(input);
     }
 
     @Override
-    public void create(Raw res) throws Exception {
+    public void create() {
         font = raw.get("font");
         charSetName = raw.get("charSetName");
         charMap = new HashMap<>();
@@ -41,14 +42,13 @@ public class FontTexture extends TextureAtlas {
         String allChars = getAllAvailableChars(charSetName);
         this.width = 0;
         this.height = 0;
-        char[] chars=allChars.toCharArray();
-        byte[] bytes=allChars.getBytes();
-        for(int i=0;i<allChars.length();i++)
-        {
+        char[] chars = allChars.toCharArray();
+        byte[] bytes = allChars.getBytes();
+        for (int i = 0; i < allChars.length(); i++) {
 
-            char c=chars[i];
-            byte b=bytes[i];
-            CharInfo charInfo = new CharInfo(c,width, fontMetrics.charWidth(c));
+            char c = chars[i];
+            byte b = bytes[i];
+            CharInfo charInfo = new CharInfo(c, width, fontMetrics.charWidth(c));
             charMap.put(b, charInfo);
             width += charInfo.width;
             height = Math.max(height, fontMetrics.getHeight());
@@ -66,19 +66,24 @@ public class FontTexture extends TextureAtlas {
         g2D.drawString(allChars, 0, fontMetrics.getAscent());
         g2D.dispose();
 
-        ImageIO.write(img, IMAGE_FORMAT, new java.io.File("generateTextureTemp.png"));
-        // Dump image to a byte buffer
-        InputStream is;
-        try (
-                ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            ImageIO.write(img, IMAGE_FORMAT, out);
-            out.flush();
-            is = new ByteArrayInputStream(out.toByteArray());
+        InputStream is = null;
+        try {
+            ImageIO.write(img, IMAGE_FORMAT, new java.io.File("generateTextureTemp.png"));
+            // Dump image to a byte buffer
+
+            try (
+                    ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                ImageIO.write(img, IMAGE_FORMAT, out);
+                out.flush();
+                is = new ByteArrayInputStream(out.toByteArray());
+            }
+        } catch (Exception e) {
+            Error.fatalError(e, "error create font texture");
         }
 
 
-        col=charMap.size();
-        row=1;
+        col = charMap.size();
+        row = 1;
         buildTexture(is);
     }
 

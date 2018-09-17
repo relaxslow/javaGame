@@ -1,78 +1,84 @@
-package engine.Objs;
+package engine.Objs.UIObjs;
 
 import engine.Buffer.VBO_D;
 import engine.Interface.INeedClean;
+import engine.Interface.IPOOL;
 import engine.Interface.InputProperty;
 import engine.Meshes.TextMesh;
-
+import engine.Objs.Canvas;
+import engine.Objs.Obj;
 import engine.Textures.CharInfo;
 import engine.Textures.FontTexture;
-import engine.Util.Error;
-import engine.Util.Raw;
 import engine.Util.Pool;
+import engine.Util.Raw;
 import engine.Util.Tools;
 import engine.View.Camera2d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharObj extends Obj implements INeedClean {
-    static Pool<CharObj> pool = new Pool<>("CharObj_Pool");
+public class CharObj extends Obj implements INeedClean, IPOOL {
+    public static Pool<CharObj> pool = new Pool<>("CharObj_Pool");
 
-    static CharObj create(InputProperty<Raw> input) throws Exception {
+    static void create( InputProperty<Raw> input) {
         CharObj newObj = pool.create(CharObj.class);
         input.run(newObj.raw);
-        newObj.matrix.identity();
-        newObj.operateMatrix.identity();
-        newObj.createName();
-        return newObj;
-    }
+        if (newObj.getCreateFrom() == Pool.CREATE_FROM_NEW) {
+            newObj.initFromNew();
 
-    static void reclaim(CharObj obj) {
-        obj.removeFromRenderGroups();
-        pool.reclaim(obj);
+        } else if (newObj.getCreateFrom() == Pool.CREATE_FROM_POOL) {
+            newObj.initFromPool();
+        }
 
     }
+
+    @Override
+    public void initFromNew() {
+        createNameByRaw();
+        canvas.createObj(this);
+    }
+
+    @Override
+    public void initFromPool() {
+        matrix.identity();
+        operateMatrix.identity();
+        canvas.attachParent(this);
+        addToRenderGroups();
+        create();
+    }
+
+    @Override
+    public void eliminate() {
+        removeFromRenderGroups();
+        pool.reclaim(this);
+    }
+    
 
     byte currentChar;
     FontTexture texture;
-    int charIndex;
+   public  int charIndex;
     CharInfo charInfo;
 
-    //    engine.CharObj(engine.InputProperty<engine.Raw> input) throws Exception {
-//        super(input);
-//    }
-//
-//    engine.CharObj() {
-//
-//    }
-
-
     @Override
-    public void create(Raw res) throws Exception {
+    public void create() {
         charIndex = raw.getX("charIndex");
         charInfo = raw.getX("charInfo");
         texture = raw.getX("fontTexture");
-
-
-        canvas = res.get("canvas");
+        
         camera = raw.getX("camera");
         if (mesh == null) ;
         mesh = new TextMesh(this.name + "_mesh", canvas.allRes, texture);
         attachCallbacks();
         if (finalTextures == null)
-            attachCustomTexture(res);
+            attachCustomTexture();
         changeChar(raw.getX("currentChar"));
-
-
     }
 
 
-
-    void changeChar(byte c) throws Exception {
+    public void changeChar(byte c) {
         this.currentChar = c;
         VBO_D textureCoordsVBO = mesh.vbos.get("a_TextureCoords");
-        textureCoordsVBO.generateNewBuffer(getNewTexCoords(), 4,false);
+        textureCoordsVBO.generateNewBuffer(getNewTexCoords(), 4, false);
         if (mesh.vaoId == 0)
             mesh.generateVAO(true);
         else
@@ -120,4 +126,27 @@ public class CharObj extends Obj implements INeedClean {
         mesh.clean();
 
     }
+
+
 }
+
+//class CharInitFun implements IInit<CharObj> {
+//    Vector4f color;
+//    float offset;
+//    float charWid;
+//    float charHei;
+//
+//    CharInitFun(Vector4f color, float offset, float charWid, float charHei) {
+//        this.color = color;
+//        this.offset = offset;
+//        this.charWid = charWid;
+//        this.charHei = charHei;
+//    }
+//
+//    @Override
+//    public void init(CharObj obj) {
+//        obj.raw.put("u_Color", color);
+//        obj.matrix.translate(offset, 0f, 0f);
+//        obj.matrix.scale(charWid, charHei, 1f);
+//    }
+//}

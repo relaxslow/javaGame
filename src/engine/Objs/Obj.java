@@ -7,20 +7,32 @@ import engine.Textures.Texture;
 import engine.Util.Raw;
 import engine.View.Camera;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class Obj extends SceneObject implements
         IRenderable,
         IParent,
         IChild,
         INeedCreate,
-        INeedClean,
-        ICanUpdate {
+        INeedClean {
     public Obj() {
+        index++;
+//        Debug.log(this.getClass().getName());
     }
 
-    public Obj(InputProperty<Raw> input) throws Exception {
+    public Obj(String meshName) {
+        name = "obj" + index;
+        index++;
+
+        mesh = canvas.allRes.getX(meshName);
+        camera = canvas.camera;
+        attachCustomTexture();
+    }
+
+    public Obj(InputProperty<Raw> input) {
         input.run(raw);
-        createName();
+        createNameByRaw();
+        index++;
     }
 
 
@@ -31,7 +43,7 @@ public class Obj extends SceneObject implements
     public Matrix4f modelMatrix = new Matrix4f(); //combine by parent|transform|operate|matrix
 
     Matrix4f parentMatrix = new Matrix4f();//accumulate from parent
-    Matrix4f transformMatrix = new Matrix4f();//clear every frame, better use to animate object
+    Matrix4f transformMatrix = new Matrix4f();//clear every frame, better use to animate object by a variable
     public Matrix4f operateMatrix = new Matrix4f();//not clear every frame, use to place object or transform  object by user input
     public Matrix4f matrix = new Matrix4f();//most private Matrix, define object center
 
@@ -53,36 +65,54 @@ public class Obj extends SceneObject implements
     }
 
     public Camera camera;
-    public Canvas canvas;
+    public static Canvas canvas;
 
-    public void createName() {
+    public void createNameByRaw() {
         name = raw.get("name");
         if (name == null) {
-            name = "obj" + index;
+            createDefaultName();
         }
-        index++;
+
     }
 
+    void createName(String name) {
+        this.name = name;
+        if (name == null) {
+            createDefaultName();
+        }
 
-    public void create(Raw res) throws Exception {
-        mesh = res.getX(raw.getX("meshName"));
-        canvas = res.get("canvas");
-        attachCamera(res);
+    }
+
+    void createDefaultName() {
+        name = "obj" + index;
+    }
+
+    public void create() {
+        mesh = canvas.allRes.getX(raw.getX("meshName"));
+        attachCamera();
         attachCallbacks();
-        attachCustomTexture(res);
+        attachCustomTexture();
         calculateMatrix();
     }
 
 
-   
-
-    void attachCamera(Raw res) {
+    public void attachCamera() {
         camera = raw.get("camera");
-        if (camera == null) ;
-        camera = canvas.camera;
+        if (camera == null)
+            camera = canvas.camera;
     }
 
-    public void attachCallbacks() throws Exception {
+    public void attachInputFun(IInput fun) {
+        inputCallBack = fun;
+        canvas.inputGroup.add(name, this);
+    }
+
+    public void attachUpdateFun(IUpdate fun) {
+        updateCallBack = fun;
+        canvas.updateGroup.add(name, this);
+    }
+
+    public void attachCallbacks() {
         initCallBack = raw.get("init");
         if (initCallBack != null) initCallBack.init(this);
         inputCallBack = raw.get("input");
@@ -94,18 +124,18 @@ public class Obj extends SceneObject implements
         return inputCallBack;
     }
 
-    
-    public void attachCustomTexture(Raw res) throws Exception {
+
+    public void attachCustomTexture() {
         Raw defaultTextures = mesh.textures;
         if (defaultTextures == null) return;
-        finalTextures = new Raw();
+        finalTextures = new Raw("final textures");
         defaultTextures.iterateKeyValueX((String name, Texture defaultTexture) -> {
             Raw customTextures = raw.get("textures");
             if (customTextures == null) {
                 finalTextures.add(name, defaultTexture);
             } else {
                 String customTextureName = customTextures.get(name);
-                Texture texture = res.getX(customTextureName);
+                Texture texture = canvas.allRes.getX(customTextureName);
                 finalTextures.add(name, texture);
             }
         });
@@ -123,47 +153,63 @@ public class Obj extends SceneObject implements
         group.remove(name);
     }
 
+    public void hide() {
+        removeFromRenderGroups();
+    }
+
+    public void show() {
+        addToRenderGroups();
+    }
+
     @Override
     public void removeFromRenderGroups() {
         if (mesh != null) {
-            removeFromGroup(canvas.renderGroupsNormal, mesh.program.name);
+            removeFromGroup(canvas.renderGroups_Normal, mesh.program.name);
         }
         if (originMesh != null) {
-            removeFromGroup(canvas.renderGroupOrigin, originMesh.program.name);
+            removeFromGroup(canvas.renderGroup_Origin, originMesh.program.name);
         }
-     
+
     }
 
-    void addToGroup(Raw renderGroups, String programName) throws Exception {
+    public void addToGroup(Raw renderGroups, String programName) {
         Raw group = renderGroups.get(programName);
         if (group == null) {
-            group = new Raw();
+            group = new Raw("render group " + programName);
             renderGroups.add(programName, group);
         }
         group.add(this.name, this);
     }
 
     @Override
-    public void addToRenderGroups() throws Exception {
+    public void addToRenderGroups() {
         if (mesh != null) {
-            addToGroup(canvas.renderGroupsNormal, mesh.program.name);
+            addToGroup(canvas.renderGroups_Normal, mesh.program.name);
         }
 
         if (originMesh != null) {
-            addToGroup(canvas.renderGroupOrigin, originMesh.program.name);
+            addToGroup(canvas.renderGroup_Origin, originMesh.program.name);
         }
-      
+
+    }
+
+    Vector4f color = new Vector4f(1f, 1f, 1f, 1f);//default white
+
+    public void setObjColor(Vector4f color) {
+        this.color.x = color.x;
+        this.color.y = color.y;
+        this.color.z = color.z;
+        this.color.w = color.w;
     }
 
     @Override
     public void render() {
 //        glUseProgram(mesh.program.id);
+        setUColor(color);
         connectUniforms(mesh);
         connectAllTexture();
         mesh.render();
     }
-
-
 
 
     public void renderOrigin() {
@@ -197,11 +243,11 @@ public class Obj extends SceneObject implements
     }
 
 
-    IParent parent;
-    Raw childs = new Raw();
+    public IParent parent;
+    public Raw childs = new Raw("obj childs");
 
     @Override
-    public void addChild(IChild obj) throws Exception {
+    public void addChild(IChild obj) {
         childs.add(obj.getName(), obj);
 
     }
@@ -230,16 +276,55 @@ public class Obj extends SceneObject implements
     }
 
 
-    @Override
     public IUpdate getUpdateFun() {
         return updateCallBack;
     }
 
+
+    String createFrom;
+
+    public void setCreateFrom(String createFrom) {
+        this.createFrom = createFrom;
+    }
+
+
+    public String getCreateFrom() {
+        return createFrom;
+    }
 //    @Override
 //    public void update(float interval) {
 //        updateCallBack.update(interval, this);
 //    }
 
 
+    public void setPos(float x, float y, float z) {
+        operateMatrix.identity();
+        operateMatrix.translate(x, y, z);
+    }
+
+    public void attachParent(IParent obj) {
+        obj.addChild(this);
+        setParent(obj);
+    }
+
+    public static Matrix4f MVPMatrix = new Matrix4f();
+
+    public Matrix4f getMVPMatrix() {
+        MVPMatrix.set(camera.matrix).mul(modelMatrix);
+        return MVPMatrix;
+    }
+
+    Vector4f uColor = new Vector4f();
+
+    public void setUColor(Vector4f color) {
+        uColor.x = color.x;
+        uColor.y = color.y;
+        uColor.z = color.z;
+        uColor.w = color.w;
+    }
+
+    public Vector4f getUColor() {
+        return uColor;
+    }
 }
 

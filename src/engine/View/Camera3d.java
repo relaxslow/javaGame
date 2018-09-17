@@ -7,15 +7,13 @@ import engine.Util.Raw;
 public class Camera3d extends Camera implements INeedCreate {
 
 
-    public Camera3d(InputProperty<Raw> input) throws Exception {
+    public Camera3d(InputProperty<Raw> input) {
         input.run(raw);
         name = set("name", "camera" + cameraIndex);
     }
 
     @Override
-    public void create(Raw res) throws Exception {
-
-        canvas = res.getX("canvas");
+    public void create()   {
         keyBoard = canvas.keyBoard;
         mouse = canvas.mouse;
 

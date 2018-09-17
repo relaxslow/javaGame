@@ -12,7 +12,7 @@ public class u_Color extends UniformFunction {
 
     @Override
     public void run(Obj obj, int location, String uniformName) {
-        Vector4f color = obj.raw.get(uniformName);
+        Vector4f color = obj.getUColor();
         glUniform4f(location, color.x, color.y, color.z, color.w);
     }
 }

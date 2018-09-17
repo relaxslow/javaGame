@@ -26,16 +26,16 @@ public abstract class Camera extends Res implements
     public Vector3f rotation = new Vector3f();
 
 
-    Canvas canvas;
+    public static Canvas canvas;
     KeyBoard keyBoard;
     Mouse mouse;
-    Raw raw = new Raw();
+    Raw raw = new Raw("camera raw");
 
     Camera() {
 
     }
 
-    Camera(InputProperty<Raw> input) throws Exception {
+    Camera(InputProperty<Raw> input)  {
         input.run(raw);
     }
 
@@ -117,4 +117,6 @@ public abstract class Camera extends Res implements
     public IInput getInputCallBack() {
         return inputCallBack;
     }
+    
+  
 }

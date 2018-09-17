@@ -39,9 +39,9 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
     Quaternionf posture = new Quaternionf();
 
     @Override
-    public void passInitData(Object data) {
+    public void init(Object data) {
         CollideInfo info = (CollideInfo) data;
-        addGround(info.obj2);
+        excludeGround(info.obj2);
 
         root.update();
         info.face.update();
@@ -78,7 +78,6 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
     }
 
     Vector3f jumpSpeedVec = new Vector3f();
-    float jumpspeed = 8f;
 
 
     final int leftKey = GLFW_KEY_A;
@@ -107,7 +106,7 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
                     if (angle > Constant.Cliff) {
                         Debug.log("collide cliff");
                         left_direct.mul(-1,jump_direct);
-                        jumpFromGround((IPhysics) obj);
+                        jumpFromGround((IPhysics) obj,4);
                         return;
                     } else if (angle < Constant.Wall) {
                         Debug.log("collide wall");
@@ -136,7 +135,7 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
                     if (angle > Constant.Cliff) {
                         Debug.log("collide cliff");
                         right_direct.mul(-1,jump_direct);
-                        jumpFromGround((IPhysics) obj);
+                        jumpFromGround((IPhysics) obj,4);
                         return;
                     } else if (angle < Constant.Wall) {
                         Debug.log("collide wall");
@@ -167,7 +166,7 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
             jump_direct.normalize();
 
 
-            jumpFromGround((IPhysics) obj);
+            jumpFromGround((IPhysics) obj,8);
 
         }
 
@@ -175,14 +174,14 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
     }
 
     //calculate jump_directFirst
-    void jumpFromGround(IPhysics obj) {
+    void jumpFromGround(IPhysics obj,float jumpSpeed) {
         input_direct.add(jump_direct);
         input_direct.normalize();
 
         obj.removeForce(Force_MoveOnGround.class);
-        input_direct.mul(jumpspeed, jumpSpeedVec);
+        input_direct.mul(jumpSpeed, jumpSpeedVec);
         obj.addForce(Force_Gravity.class, jumpSpeedVec);
-        removeAllGround();
+        removeAllExcludedGround();
 
         adjustPosture(Constant.UP3f);
     }
@@ -197,17 +196,17 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
         hostObj.getOperateMatrix().rotate(posture);
     }
 
-    public void addGround(ICollidable ground) {
+    public void excludeGround(ICollidable ground) {
         grounds.add(ground);
-        hostObj.addCollideExclude(ground);
+        ((ICollidable)hostObj).addCollideExclude(ground);
 
     }
 
 
-    public void removeAllGround() {
+    public void removeAllExcludedGround() {
         for (int i = 0; i < grounds.size(); i++) {
             ICollidable ground = grounds.get(i);
-            hostObj.removeCollideExclude(ground);
+            ((ICollidable)hostObj).removeCollideExclude(ground);
         }
         grounds.clear();
 
@@ -235,10 +234,6 @@ public class Force_MoveOnGround extends ForceFunction implements IInput, INeedDa
 
     }
 
-    //    Vector3f leftDirect=new Vector3f();
-//    Vector3f rightDirect = new Vector3f();
-    boolean isLeftCliff = false;
-    boolean isRightCliff = false;
 
     class ReachGoalFun implements ICollideOccur {
 

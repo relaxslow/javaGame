@@ -1,10 +1,6 @@
 package engine.Interface;
 
 import engine.Objs.PhysicObj;
-import engine.Objs.Scene;
-import engine.Physics.BVertex;
-
-import java.util.Iterator;
 
 public interface IForceFunction {
     String getName();
@@ -13,6 +9,6 @@ public interface IForceFunction {
 
     void setHostObj(PhysicObj obj);
 //    void setRoot(BVertex vertex);
-    void setScene(Scene scene);
+//    void setScene(Scene scene);
     
 }

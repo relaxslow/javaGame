@@ -5,6 +5,7 @@ import engine.Buffer.VBOAttribute;
 import engine.Interface.IRenderMesh;
 import engine.Interface.IUniformFunction;
 
+import engine.Objs.Canvas;
 import engine.Programs.Program;
 import engine.Textures.Texture;
 import engine.Util.Raw;
@@ -23,11 +24,11 @@ import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public abstract class Mesh extends Res implements IRenderMesh {
-    public Raw raw = new Raw();
+    public Raw raw = new Raw("Mesh raw data");
     public Program program;
     public int primitiveType;
     public int vaoId;
-    public Raw vbos = new Raw();//{key:attributeName,VBO:buffers}
+    public Raw vbos = new Raw("mesh vbos collection");//{key:attributeName,VBO:buffers}
     public Raw attributesLocation;//{key:attributeName,int:location}
     public Raw uniformsLocation;//{key:uniformName,int:location}
     public Raw uniformsFunction;//{key:uniformName, Uniformfunction:function}
@@ -37,7 +38,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
     public Raw texturesChannels;//{key:uniformName,int:channel}
     public Raw textures;//{key:uniformName,Texture:texture}
 
-    void getPrimitiveType() throws Exception {
+    void getPrimitiveType()  {
         if (Debug.wireFrame == true)
             primitiveType = GL_LINES;
         else
@@ -45,7 +46,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
 
     }
 
-    public void getAttribute(Raw res) throws Exception {
+    public void getAttribute(Raw res)  {
         attributesLocation = program.attributes;
 
         attributesLocation.iterateKeyValueX((String attributeName, Integer location) -> {
@@ -60,10 +61,10 @@ public abstract class Mesh extends Res implements IRenderMesh {
 
     }
 
-    public void getUniform(Raw res) throws Exception {
+    public void getUniform(Raw res)  {
         uniformsLocation = program.uniforms;
         if (uniformsLocation == null) return;
-        uniformsFunction = new Raw();
+        uniformsFunction = new Raw("uniformFunction collection");
         uniformsLocation.iterateKeyValueX((String uniformName, Integer location) -> {
             if (location >= 0) {
                 IUniformFunction fun = res.getX(uniformName); //attach function
@@ -74,7 +75,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
 
     }
 
-    void getTexture(Raw res) throws Exception {
+    void getTexture(Raw res)  {
         texturesChannels = program.textureChannels;
         if (texturesChannels == null) return;
 
@@ -83,7 +84,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
         if (textures == null) {
             Raw defaultTextureNames = raw.get("textures");//default textures
 
-            textures = new Raw();
+            textures = new Raw("textures in mesh");
             texturesChannels.iterateKeyX((String uniformName) -> {
                 Texture texture;
                 if (defaultTextureNames == null || defaultTextureNames.getX(uniformName) == null)
@@ -95,7 +96,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
         }
 
 
-        texturesFunction = new Raw();
+        texturesFunction = new Raw("textures functions in mesh");
         texturesChannels.iterateKeyX((String uniformName) -> {
             IUniformFunction fun = res.getX("u_Sampler");
             texturesFunction.add(uniformName, fun);
@@ -104,7 +105,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
     }
 
 
-    void bindAttributes() throws Exception {
+    void bindAttributes()  {
         attributesLocation.iterateKeyValueX((String name, Integer location) -> {
             VBO vbo = vbos.getX(name);
             glBindBuffer(GL_ARRAY_BUFFER, vbo.id);
@@ -116,7 +117,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
     }
 
 
-    int getBeginIndex(String attributeName, VBO buffer) throws Exception {
+    int getBeginIndex(String attributeName, VBO buffer)  {
         VBOAttribute attributes = buffer.data.getX("attributes");
         return attributes.getAccumulateResult((String name, Integer dataAmount) -> {
             if (name.equals(attributeName))
@@ -127,7 +128,7 @@ public abstract class Mesh extends Res implements IRenderMesh {
 
 
 
-    public void generateVAO(boolean generateNew) throws Exception {
+    public void generateVAO(boolean generateNew)  {
         if (generateNew)
             vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);

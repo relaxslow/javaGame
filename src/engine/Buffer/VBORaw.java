@@ -3,11 +3,15 @@ package engine.Buffer;
 import engine.Util.Raw;
 
 public class VBORaw extends Raw {
-    public void setDataAmount(String name, int number) throws Exception {
+    VBORaw(String name) {
+        super(name);
+    }
+
+    public void setDataAmount(String name, int number) {
 
         VBOAttribute attributes = get("attributes");
         if (attributes == null) {
-            attributes = new VBOAttribute();
+            attributes = new VBOAttribute("VBOAttribute");
             add("attributes", attributes);
 
         }

@@ -13,7 +13,7 @@ public class Force_Gravity extends ForceFunction implements IAccelerate, INeedDa
     Vector3f finalSpeed = new Vector3f();
 
     @Override
-    public void passInitData(Object data) {
+    public void init(Object data) {
         accumulator = 0;
         initSpeed.set((Vector3f) data);
     }

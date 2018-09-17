@@ -8,12 +8,20 @@ import engine.Meshes.ArrayMesh;
 import engine.Meshes.ElementMesh;
 import engine.Meshes.FileMesh;
 import engine.Meshes.NullMesh;
-import engine.Objs.*;
+import engine.Objs.Block;
 import engine.Objs.Canvas;
+import engine.Objs.Helper.Border;
+import engine.Objs.Helper.TrackLine;
+import engine.Objs.Player;
+import engine.Objs.ScoreObj;
+import engine.Objs.UIObjs.Button;
+import engine.Objs.UIObjs.FontTextObj;
+import engine.Objs.scenes.CloudGenerator;
 import engine.Physics.BoundingMesh;
 import engine.Physics.CollideInfo;
 import engine.Physics.ForceFunctions.Force_Gravity;
 import engine.Physics.ForceFunctions.Force_MoveOnGround;
+import engine.Physics.ForceFunctions.Force_MoveOnWall;
 import engine.Programs.Program;
 import engine.Programs.ProgramRaw;
 import engine.Programs.Shader;
@@ -23,15 +31,13 @@ import engine.Textures.TextureAtlas;
 import engine.UniformFunctions.*;
 import engine.Util.Debug;
 import engine.Util.Raw;
-import engine.Util.Error;
 import engine.View.Camera2d;
 import engine.View.Camera3d;
-import org.joml.Matrix4f;
+import engine.View.CameraUI;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.awt.*;
-import java.util.Vector;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_LINES;
@@ -42,79 +48,45 @@ import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
 public class Game {
 
+    static Canvas canvas;
 
     public static void main(String[] args) {
         test();
-        Canvas canvas = new Canvas(640, 480);
-        try {
-            addShaders(canvas);
-            addPrograms(canvas);
-            addTextures(canvas);
-            addVBOs(canvas);
-            addCameras(canvas);
-            addUniformFunctions(canvas);
-            addMesh(canvas);
-            addBoundingBox(canvas);
+        canvas = new Canvas(640, 480);
 
-            setCollide(canvas);
-            addTrackLines(canvas);
-            addSceneObj(canvas);
-            addUIObj(canvas);
+        addShaders();
+        addPrograms();
+        addTextures();
+        addVBOs();
+        addCameras();
+        addUniformFunctions();
+        addMesh();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Error.fatalError(e, "error when init resources");
-        }
+        setCollide();
+        addTrackLines();
+        addSceneObj();
+        addUIObj();
+
+
         canvas.loop();
 
         canvas.clean();
 
     }
 
-    private static void addTrackLines(Canvas canvas) throws Exception {
-//        canvas.createObj(new LineObj((Raw raw) -> {
-//            raw.add("name", "line");
-//            raw.add("camera", canvas.camera);
-//            raw.add("u_Color", new Vector4f(1f, 0f, 1f, 1f));
-//            Vector3f[] points = new Vector3f[2];
-//            points[0] = new Vector3f(0f, 0f, 0f);
-//            points[1] = new Vector3f(0f, 0f, 0f);
-//            raw.add("points", points);
-//            raw.add("input", (IInput<LineObj>) (KeyBoard key, Mouse mouse, LineObj line) -> {
-//                if (key.isPressed(GLFW_KEY_I)) {
-//                    Vector3f[] newPoints = new Vector3f[4];
-//                    newPoints[0] = new Vector3f(0f, 0f, 0f);
-//                    newPoints[1] = new Vector3f(-5f, 3f, 1f);
-//                    newPoints[2] = new Vector3f(1f, 2f, 5f);
-//                    newPoints[3] = new Vector3f(3f, 2f, 4f);
-//
-//                    try {
-//                        line.changeLine(newPoints);
-//                    } catch (Exception e) {
-//                        Error.fatalError(e, "error when change line");
-//                    }
-//                }
-//
-//            });
-//        }));
 
-        canvas.createObj(new TrackLine(
-                "trackFaceLine",
-                new Vector4f(1f, 1f, 0f, 1f) //yellow
-        ));
+    private static void addTrackLines() {
 
-        canvas.createObj(new TrackLine(
-                "trackPointLine",
-                new Vector4f(1f, 0f, 1f, 1f)//purple
-        ));
+        new TrackLine("trackFaceLine", new Vector4f(1f, 1f, 0f, 1f));//yellow
+        new TrackLine("trackPointLine", new Vector4f(1f, 0f, 1f, 1f));//purple
         canvas.setVertexTrackLine("trackPointLine");
         canvas.setFaceTrackLine("trackFaceLine");
 
     }
 
     private static void test() {
-        
-        
+
+
 //        Vector3f aaa = new Vector3f(1, 0, 0);
 //        Vector3f bbb = new Vector3f();
 //        aaa.mul(-1, bbb);
@@ -139,7 +111,7 @@ public class Game {
         Debug.log("angle:" + angle2);
     }
 
-    private static void setCollide(Canvas canvas) throws Exception {
+    private static void setCollide() {
         canvas.addCollideGroup("Blocks");
         canvas.addCollideGroup("Props");
         canvas.addCollideGroup("Enemies");
@@ -148,17 +120,22 @@ public class Game {
         canvas.allowCollide("Players", "Blocks", (CollideInfo info) -> {
             Player player = info.getObjWithType(Player.class);
             Block block = info.getObjWithType(Block.class);
-            //detemine action type according to face and vertex, for example 
-            // if face towards down side, then it must collide with a ceiling
-            //if face towards upside (between special angle) the face is considered as a landable face, then only root vertex collision could occur
-            player.removeForce(Force_Gravity.class);
 
-            IForceFunction forcefun = player.getForce(Force_MoveOnGround.class);
-            if (forcefun != null) {//already on ground
-                ((INeedChangeData) forcefun).change(info);
-//                    player.changeForce(forcefun, info);
-            } else {
-                player.addForce(Force_MoveOnGround.class, info);
+            if (info.hasCollideVetex(player.rootPoint)) {
+                player.removeForce(Force_Gravity.class);
+
+                IForceFunction forcefun = player.getForce(Force_MoveOnGround.class);
+                if (forcefun != null) {//already on ground
+                    ((INeedChangeData) forcefun).change(info);
+                } else {
+                    player.addForce(Force_MoveOnGround.class, info);
+
+                }
+            } else if (info.hasCollideVetex(player.corner0) || info.hasCollideVetex(player.corner2)) {
+                Debug.log("collide side!");
+//                player.speed.set(Constant.ZERO3f);
+                player.removeForce(Force_Gravity.class);
+                player.addForce(Force_MoveOnWall.class, info);
 
             }
 
@@ -170,7 +147,7 @@ public class Game {
     }
 
 
-    private static void addMesh(Canvas canvas) throws Exception {
+    private static void addMesh() {
         //------------------------------------------------------------
         //meshes must init after those VBO 
         canvas.addRes(new ArrayMesh((Raw raw) -> {
@@ -178,7 +155,7 @@ public class Game {
             raw.add("program", "triangleProgram");
             raw.add("primitiveType", GL_TRIANGLES);
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "triangleVBO");
 
@@ -190,7 +167,7 @@ public class Game {
             raw.add("primitiveType", GL_LINES);
 
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "rectangleVertexPosition");
             attributes.add("a_Color", "rectangleVertexColor");
@@ -208,7 +185,7 @@ public class Game {
             raw.add("program", "MVPProgram");
             raw.add("primitiveType", GL_LINES);
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "boxVertexPosition");
             attributes.add("a_Color", "boxVertexColor");
@@ -226,7 +203,7 @@ public class Game {
             raw.add("program", "MVPProgram");
             raw.add("primitiveType", GL_LINES);
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "originIndicatorVBO");
             attributes.add("a_Color", "originIndicatorVBO");
@@ -240,7 +217,7 @@ public class Game {
             raw.add("primitiveType", GL_TRIANGLES);
 
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "rectangleVertexPosition");
 
@@ -258,7 +235,7 @@ public class Game {
             raw.add("primitiveType", GL_TRIANGLES);/*GL_TRIANGLES*//*GL_LINES*//*GL_LINE_LOOP*/
 
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "uiTextVertexPos_VBO");
 
@@ -277,7 +254,7 @@ public class Game {
             raw.add("primitiveType", GL_TRIANGLES);/*GL_TRIANGLES*//*GL_LINES*//*GL_LINE_LOOP*/
 
 
-            Raw attributes = new Raw();
+            Raw attributes = new Raw("attributes raw");
             raw.add("attributes", attributes);
             attributes.add("a_Position", "box_SeperateFace_VertexPosition_VBO");
             attributes.add("a_TextureCoords", "box_SeperateFace_TextureCoords_VBO");
@@ -313,6 +290,7 @@ public class Game {
             raw.add("primitiveType", GL_TRIANGLES);
         }));
         canvas.addRes(new BoundingMesh("/model/jumpbox_Bounding"));
+
         canvas.addRes(new FileMesh((Raw raw) -> {
             raw.add("name", "/model/groundSurface");
             raw.add("primitiveType", GL_TRIANGLES);
@@ -326,10 +304,10 @@ public class Game {
         canvas.addRes(new BoundingMesh("/model/stone_BoundingBox"));
 
         canvas.addRes(new FileMesh((Raw raw) -> {
-            raw.add("name", "/model/testPlatform");
+            raw.add("name", "/model/testPlatform1");
             raw.add("primitiveType", GL_TRIANGLES);
         }));
-        canvas.addRes(new BoundingMesh("/model/testPlatformBoundingBox"));
+        canvas.addRes(new BoundingMesh("/model/testPlatform1_BoundingBox"));
 
 
         canvas.addRes(new FileMesh((Raw raw) -> {
@@ -343,59 +321,39 @@ public class Game {
             raw.add("primitiveType", GL_TRIANGLES);
         }));
         canvas.addRes(new BoundingMesh("/model/testPlatform3_BoundingBox"));
+
+        canvas.addRes(new FileMesh((Raw raw) -> {
+            raw.add("name", "/model/thorns");
+            raw.add("primitiveType", GL_TRIANGLES);
+        }));
+        canvas.addRes(new BoundingMesh("/model/thorns_BoundingBox"));
+
+        canvas.addRes(new FileMesh((Raw raw) -> {
+            raw.add("name", "/model/cloud");
+            raw.add("primitiveType", GL_TRIANGLES);
+        }));
+        canvas.addRes(new FileMesh((Raw raw) -> {
+            raw.add("name", "/model/flag");
+            raw.add("primitiveType", GL_TRIANGLES);
+        }));
+
+        canvas.addRes(new FileMesh((Raw raw) -> {
+            raw.add("name", "/model/button");
+            raw.add("primitiveType", GL_TRIANGLES);
+        }));
+
     }
 
-    static void addBoundingBox(Canvas canvas) throws Exception {
 
-
-    }
-
-    private static void addCameras(Canvas canvas) throws Exception {
-        canvas.addRes(new Camera2d((Raw raw) -> {
+    private static void addCameras() {
+        canvas.addRes(new CameraUI((Raw raw) -> {
             raw.add("name", "UICamera");
             raw.add("left", 0f);
             raw.add("right", (float) canvas.width);
             raw.add("bottom", (float) canvas.height);
             raw.add("top", 0f);
-            raw.add("near", -1000f);
-            raw.add("far", 1000f);
-//            raw.add("input", (Interface.IInput<Camera2d>) (KeyBoard key, Mouse mouse, Camera2d camera) -> {
-//
-//                if (key.isPressed(GLFW_KEY_UP)) {
-//                    camera.deltaPos.z += -100;
-//                } else if (key.isPressed(GLFW_KEY_DOWN)) {
-//                    camera.deltaPos.z += 100;
-//                }
-//                if (key.isPressed(GLFW_KEY_LEFT)) {
-//                    camera.deltaPos.x += -100;
-//                } else if (key.isPressed(GLFW_KEY_RIGHT)) {
-//                    camera.deltaPos.x += 100;
-//                }
-//                if (key.isPressed(GLFW_KEY_KP_1)) {
-//                    camera.deltaPos.y += -100;
-//                } else if (key.isPressed(GLFW_KEY_KP_0)) {
-//                    camera.deltaPos.y += 100;
-//                }
-//
-//                if (mouse.rightButtonPressed) {
-//                    camera.deltaRot = mouse.delta;
-//
-//                } else
-//                    camera.deltaRot = camera.zero;
-//            });
-//            raw.add("update", (Interface.IUpdate<Camera2d>) (float interval, Camera2d camera) -> {
-//
-//                float moveStep = interval * camera.moveSpeed;
-//                float rotateStep = interval * camera.rotateSpeed;
-//                // Interface.IUpdate camera position
-//                camera.move(camera.deltaPos.x * moveStep, camera.deltaPos.y * moveStep, camera.deltaPos.z * moveStep);
-//                camera.deltaPos.set(0, 0, 0);
-//
-//                camera.rotate(camera.deltaRot.y * rotateStep, camera.deltaRot.x * rotateStep, 0);
-//
-//                camera.buildViewMatrix();
-//
-//            });
+            raw.add("near", -100f);
+            raw.add("far", 100f);
 
         }));
         canvas.setUICamera("UICamera");
@@ -406,9 +364,9 @@ public class Game {
                 camera.near = camera.set("near", 0.01f);
                 camera.far = camera.set("far", 1000f);
 
-                camera.position.x = 0.75f;
-                camera.position.y = 0.41f;
-                camera.position.z = 3.71f;
+                camera.position.x = 4.45f;
+                camera.position.y = 7.44f;
+                camera.position.z = 14.69f;
                 camera.rotation.x = 19.12f;
                 camera.rotation.y = -13.20f;
 
@@ -465,8 +423,8 @@ public class Game {
         canvas.addRes(new Camera2d((Raw raw) -> {
             raw.add("name", "2dSceneCamera");
 //            raw.add("wid", 5f);
-            float ratio = (float) canvas.height / (float) canvas.width;
-            float width = 5f;
+            float width = 11.90f;
+            float ratio = canvas.getRatio();
             float height = width * ratio;
             raw.add("ratio", ratio);
             raw.add("left", -width);
@@ -490,10 +448,13 @@ public class Game {
                 } else if (key.isPressed(GLFW_KEY_DOWN)) {
                     camera.deltaPos.y += 1;
                 }
+                camera.zoomed = false;
                 if (key.isPressed(GLFW_KEY_KP_1)) {
                     camera.zoomIn();
+                    camera.zoomed = true;
                 } else if (key.isPressed(GLFW_KEY_KP_0)) {
                     camera.zoomOut();
+                    camera.zoomed = true;
                 }
 
             });
@@ -510,7 +471,7 @@ public class Game {
         canvas.setSceneCamera("2dSceneCamera");
     }
 
-    private static void addUIObj(Canvas canvas) throws Exception {
+    private static void addUIObj() {
         canvas.createObj(new FontTextObj((Raw raw) -> {
             raw.add("name", "scoreText");
             raw.add("camera", canvas.UICamera);
@@ -559,12 +520,33 @@ public class Game {
 //                    obj.operateMatrix.scale(4f, 4f, 0f);
             });
             raw.add("update", (IUpdate<FontTextObj>) (float interval, FontTextObj obj) -> {
-                if (canvas.camera.moved) {
-                    String x = String.format("%.2f", canvas.camera.position.x);
-                    String y = String.format("%.2f", canvas.camera.position.y);
-                    String z = String.format("%.2f", canvas.camera.position.z);
-                    obj.changeText(x + "," + y + "," + z);
+                String display = "";
+
+                if (canvas.camera instanceof Camera3d) {
+                    if (canvas.camera.moved) {
+                        String x = String.format("%.2f", canvas.camera.position.x);
+                        String y = String.format("%.2f", canvas.camera.position.y);
+                        String z = String.format("%.2f", canvas.camera.position.z);
+
+                        obj.changeText(x + "," + y + "," + z);
+
+
+                    }
+                } else if (canvas.camera instanceof Camera2d) {
+
+                    if (canvas.camera.moved || ((Camera2d) canvas.camera).zoomed) {
+                        String x = String.format("%.2f", canvas.camera.position.x);
+                        String y = String.format("%.2f", canvas.camera.position.y);
+
+                        String left = String.format("%.2f", ((Camera2d) canvas.camera).left);
+                        String bottom = String.format("%.2f", ((Camera2d) canvas.camera).bottom);
+
+                        obj.changeText(x + "," + y + "|" + left + "," + bottom);
+                    }
+
                 }
+
+
             });
         }));
         canvas.createObj(new FontTextObj((Raw raw) -> {
@@ -587,230 +569,81 @@ public class Game {
                 }
             });
         }));
-        canvas.createObj(new NullObj((Raw raw) -> {
-            raw.add("name", "originIndicator");
-            raw.add("meshName", "originIndicatorMesh");
-            raw.add("camera", canvas.camera);
-            raw.add("init", (IInit<NullObj>) (NullObj obj) -> {
-                obj.matrix.scale(0.4f, 0.4f, 0.4f);
-//                obj.operateMatrix.translate(0 , 0, 10);
-            });
-        }));
+        Button button = new Button("restart");
+        button.operateMatrix.translate(10f, 100f, 0f);
+        button.mouseClickFun=()->{
+            canvas.player.reset();
+            canvas.sceneManager.resetScene();
+        };
+
+
     }
 
-    private static void addSceneObj(Canvas canvas) throws Exception {
-        canvas.createObj(new Obj((Raw raw) -> {
-            raw.add("name", "eliminateBorder");
-            raw.add("camera", canvas.camera);
-            raw.add("meshName", "rectangleMesh");
-            raw.add("init", (IInit<Obj>) (Obj obj) -> {
-                obj.matrix.translate(0f, 2f, 0f);
-                obj.matrix.scale(15f, 10f, 1f);
+    private static void addSceneObj() {
+//        new OriginIndicator(canvas);
+        float visualWid = 15f;
+        float eliminWid = visualWid * 2f;
+        float generaWid = visualWid * 1.5f;
+        canvas.eliminateBorder = new Border("eliminate border",eliminWid, eliminWid * canvas.getRatio());
+        canvas.visualBorder = new Border("visual border",visualWid, visualWid * canvas.getRatio());
+        canvas.generateBorder = new Border("generate border",generaWid, generaWid * canvas.getRatio());
 
-//                obj.operateMatrix.translate(0 , 0, 10);
-            });
-        }));
-        canvas.createObj(new Obj((Raw raw) -> {
-            raw.add("name", "visualBorder");
-            raw.add("camera", canvas.camera);
-            raw.add("meshName", "rectangleMesh");
-            raw.add("init", (IInit<Obj>) (Obj obj) -> {
-                obj.matrix.translate(0f, 2f, 0f);
-                obj.matrix.scale(12f, 8f, 1f);
-
-//                obj.operateMatrix.translate(0 , 0, 10);
-            });
-        }));
-        canvas.createObj(new Scene((Raw raw) -> {
-            raw.add("name", "sceneRoot");
-            raw.add("camera", canvas.camera);
-            raw.add("init", (IInit<Scene>) (Scene obj) -> {
-                obj.matrix.scale(0.4f, 0.4f, 0.4f);//smaller the origin indicator
-            });
-            raw.add("update", (IUpdate<Scene>) (float interval, Scene scene) -> {
-                scene.offset.set(scene.getSpeed()).mul(interval);
-                scene.operateMatrix.translate(scene.offset);
-            });
-        }));
-        canvas.createObj(new NullObj((Raw raw) -> {
-            raw.add("name", "sceneGroup1");
-            raw.add("parent", "sceneRoot");
-            raw.add("camera", canvas.camera);
-            raw.add("init", (IInit<NullObj>) (NullObj obj) -> {
-                obj.matrix.scale(0.4f, 0.4f, 0.4f);
-                obj.operateMatrix.translate(0f, -2f, 0.2f);
-            });
-
-        }));
-
-        canvas.createObj(new Obj((Raw raw) -> {
-            raw.add("name", "tree");
-            raw.add("meshName", "/model/tree");
-            raw.add("parent", "sceneGroup1");
-            raw.add("init", (IInit<Obj>) (Obj obj) -> {
-                obj.operateMatrix.translate(2f, 0, 0f);
-
-
-                obj.matrix.translate(0f, 0f, -1f);
-                obj.matrix.scale(2f, 2f, 1f);
-
-            });
-        }));
-        canvas.createObj(new PhysicObj((Raw raw) -> {
-            raw.add("name", "stone");
-            raw.add("meshName", "/model/stone");
-            raw.add("boundingBox", "/model/stone_BoundingBox");
-            raw.add("u_Color", new Vector4f(0f, 1f, 1f, 1f));
-
-            raw.add("parent", "sceneGroup1");
-            raw.add("init", (IInit<Obj>) (Obj obj) -> {
-                obj.operateMatrix.translate(7f, 0, 0f);
-                obj.matrix.translate(0f, 0f, 0.1f);//cover player
-                obj.matrix.scale(1f, 1f, 1f);
-
-            });
-        }));
-        canvas.createObj(new Block((Raw raw) -> {
-            raw.add("name", "testPlatform");
-            raw.add("parent", "sceneGroup1");
-
-            raw.add("meshName", "/model/testPlatform3");
-            raw.add("boundingBox", "/model/testPlatform3_BoundingBox");
-            raw.add("u_Color", new Vector4f(0f, 1f, 1f, 1f));
-
-            raw.add("init", (IInit<Obj>) (Obj obj) -> {
-//                obj.matrix.rotateZ((float) Math.toRadians(-10));
-//                obj.operateMatrix.translate(3f, 0, 0f);
-                obj.matrix.translate(0f, 0f, 0.1f);
-                obj.matrix.scale(1f, 1f, 1f);
-
-            });
-        }));
-
+        canvas.sceneManager.beginCreate();
 
         canvas.createObj(new Player((Raw raw) -> {
             raw.add("name", "jumpbox");
             raw.add("meshName", "/model/jumpbox");
             raw.add("boundingBox", "/model/jumpbox_Bounding");
-            raw.add("u_Color", new Vector4f(0f, 1f, 1f, 1f));
+//            raw.add("u_Color", new Vector4f(0f, 1f, 1f, 1f));
 
             raw.add("init", (IInit<Player>) (Player player) -> {
 //                player.operateMatrix.rotateZ((float) Math.toRadians(10));
                 player.addForce(Force_Gravity.class, new Vector3f());
 
             });
-//            raw.add("input", (IInput<Player>) (KeyBoard key, Mouse mouse, Player player) -> {
-//               player.responseInput(key,mouse);
-//            });
+
             raw.add("update", (IUpdate<Player>) (float interval, Player obj) -> {
 
             });
         }));
 
-
+        CloudGenerator cloudGenerator = canvas.allRes.get("cloud generator");
+        cloudGenerator.begin();
     }
 
 
-    private static void addShaders(Canvas canvas) throws Exception {
+    private static void addShaders() {
 
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/simple3D.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/simple.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/triangle.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/triangle.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
+        new Shader(GL_VERTEX_SHADER, "/shader/simple3D.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/simple.frag");
 
+        new Shader(GL_VERTEX_SHADER, "/shader/triangle.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/triangle.frag");
 
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/rectangle.vert");
-            raw.add("type", GL_VERTEX_SHADER);
+        new Shader(GL_VERTEX_SHADER, "/shader/rectangle.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/rectangle.frag");
 
+        new Shader(GL_VERTEX_SHADER, "/shader/mvp.vert");
+        new Shader(GL_VERTEX_SHADER, "/shader/simpleTriangle.vert");
+        new Shader(GL_VERTEX_SHADER, "/shader/texture.vert");
 
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/rectangle.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
+        new Shader(GL_FRAGMENT_SHADER, "/shader/texture.frag");
 
+        new Shader(GL_VERTEX_SHADER, "/shader/UIText.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/UIText.frag");
 
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/mvp.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/simpleTriangle.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/texture.vert");
-            raw.add("type", GL_VERTEX_SHADER);
+        new Shader(GL_VERTEX_SHADER, "/shader/text.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/text.frag");
 
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/texture.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
+        new Shader(GL_VERTEX_SHADER, "/shader/model.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/model.frag");
 
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/UIText.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-
-
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/UIText.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
-
-        }));
-
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/text.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-
-
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/text.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
-
-        }));
-
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/model.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-
-
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/model.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
-
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/modelNoTex.vert");
-            raw.add("type", GL_VERTEX_SHADER);
-
-
-        }));
-        canvas.addRes(new Shader((Raw raw) -> {
-            raw.add("name", "/shader/modelNoTex.frag");
-            raw.add("type", GL_FRAGMENT_SHADER);
-
-        }));
+        new Shader(GL_VERTEX_SHADER, "/shader/modelNoTex.vert");
+        new Shader(GL_FRAGMENT_SHADER, "/shader/modelNoTex.frag");
 
     }
 
-    static void addPrograms(Canvas canvas) throws Exception {
+    static void addPrograms() {
         //program
         canvas.addRes(new Program((ProgramRaw data) -> {
             data.add("name", "Program-modelNoTex");
@@ -838,7 +671,7 @@ public class Game {
                     "u_MVPMatrix",
                     "u_UseTexture"
             });
-            Raw channels = new Raw();
+            Raw channels = new Raw("channels");
             data.add("channels", channels);
             channels.add("u_Texture01", 1);
 
@@ -856,7 +689,7 @@ public class Game {
                     "u_MVPMatrix",
                     "u_Color"
             });
-            Raw channels = new Raw();
+            Raw channels = new Raw("channels");
             data.add("channels", channels);
             channels.add("u_Texture1", 1);
         }));
@@ -928,7 +761,7 @@ public class Game {
                     "u_MVPMatrix",
             });
 
-            Raw channels = new Raw();
+            Raw channels = new Raw("channels");
             data.add("channels", channels);
             channels.add("u_Texture1", 1);
 
@@ -952,9 +785,9 @@ public class Game {
         }));
     }
 
-    private static void addUniformFunctions(Canvas canvas) throws Exception {
+    private static void addUniformFunctions() {
         //uniforms functions
-        canvas.addRes(new u_ProjectMatrix(canvas));
+        canvas.addRes(new u_ProjectMatrix());
         canvas.addRes(new u_MVPMatrix());
         canvas.addRes(new u_ModelMatrix());
         canvas.addRes(new u_Sampler());
@@ -963,7 +796,7 @@ public class Game {
     }
 
 
-    private static void addVBOs(Canvas canvas) throws Exception {
+    private static void addVBOs() {
         //VBO
         //triangleBuffers
         canvas.addRes(new VBO((VBORaw data) -> {
@@ -1325,8 +1158,9 @@ public class Game {
         }));
     }
 
-    static void addTextures(Canvas canvas) throws Exception {
+    static void addTextures() {
         //textures
+        ;
         canvas.addRes(new FontTexture((Raw raw) -> {
             raw.add("name", "DebugTextFontTexture");/*Showcard Gothic*//*Ethnocentric*//*a*/
             raw.add("font", new Font("ProFontWindows", Font.PLAIN, 12));

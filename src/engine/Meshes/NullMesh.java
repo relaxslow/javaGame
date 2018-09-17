@@ -7,20 +7,20 @@ import static org.lwjgl.opengl.GL11.GL_LINES;
 
 public class NullMesh extends ArrayMesh {
     @Override
-    public void create(Raw res) throws Exception {
+    public void create()  {
         name = "NullMesh";
         raw.add("name", name);
-        program = res.getX("MVPProgram");
+        program = canvas.allRes.getX("MVPProgram");
         primitiveType = GL_LINES;
 
         attributesLocation = program.attributes;
-        vbos = new Raw();
+        vbos = new Raw("vbos");
 
-        vbos.add("a_Position", res.get("NullVertexPosition"));
-        vbos.add("a_Color", res.get("NullVertexColor"));
+        vbos.add("a_Position", canvas.allRes.get("NullVertexPosition"));
+        vbos.add("a_Color", canvas.allRes.get("NullVertexColor"));
 
 
-        getUniform(res);
+        getUniform(canvas.allRes);
 
 
         generateVAO(true);

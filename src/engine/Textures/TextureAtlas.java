@@ -8,14 +8,14 @@ public class TextureAtlas extends Texture {
     int row;
     int col;
 
-    public TextureAtlas(InputProperty<Raw> input) throws Exception {
+    public TextureAtlas(InputProperty<Raw> input)  {
         super(input);
 
     }
 
     @Override
-    public void create(Raw res) throws Exception {
-        super.create(res);
+    public void create() {
+        super.create();
         row = raw.get("row");
         col = raw.get("col");
     }

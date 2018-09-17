@@ -1,6 +1,7 @@
 package engine.UniformFunctions;
 
 import engine.Interface.IUniformFunction;
+import engine.Objs.Canvas;
 import engine.Objs.Obj;
 import engine.Util.Res;
 import org.joml.Matrix4f;
@@ -13,6 +14,7 @@ import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 
 public abstract class UniformFunction extends Res implements IUniformFunction<Obj> {
 
+    public static Canvas canvas;
     void pass_MatrixUnifrom_value(Matrix4f matrix, int location) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             FloatBuffer fb = stack.mallocFloat(16);
